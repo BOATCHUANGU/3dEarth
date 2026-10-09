@@ -1,0 +1,39 @@
+{
+  "name": "earth-observatory",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "build:android": "tsc --noEmit && vite build --mode android",
+    "android:sync": "npm run build:android && cap sync android",
+    "android:open": "npm run android:sync && cap open android",
+    "android:run": "npm run android:sync && cap run android",
+    "android:apk": "npm run android:sync && cd android && gradlew.bat assembleDebug",
+    "preview": "vite preview --host 127.0.0.1",
+    "serve": "node server/serve.mjs",
+    "test:relay": "node --test scripts/relay-check.mjs",
+    "test": "vitest run",
+    "test:browser": "node scripts/smoke-test.mjs && node scripts/failure-check.mjs && node scripts/city-smoke.mjs && node scripts/china-network-check.mjs",
+    "test:china-network": "node scripts/china-network-check.mjs",
+    "check:visual": "node scripts/visual-check.mjs",
+    "format": "prettier --write src scripts vite.config.ts"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/core": "8.5.2",
+    "gsap": "3.15.0",
+    "lucide": "^0.577.0",
+    "three": "^0.183.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2",
+    "@playwright/test": "^1.58.2",
+    "@types/three": "^0.183.0",
+    "prettier": "^3.9.9",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18"
+  }
+}

@@ -1,0 +1,848 @@
+{
+  "baseURL": "http://127.0.0.1:4173",
+  "startedAt": "2026-10-01T03:42:00.615Z",
+  "checks": [
+    {
+      "name": "Regional imagery refines to city streets using native LOD",
+      "passed": true,
+      "details": {
+        "regional": {
+          "active": true,
+          "mode": "auto",
+          "source": "eox-sentinel-2025",
+          "sourceName": "Sentinel-2 · 10 m",
+          "attribution": "Sentinel-2 cloudless 2025 © EOX · CC BY-NC-SA 4.0",
+          "attributionUrl": "https://cloudless.eox.at/license-non-commercial",
+          "zoom": 10,
+          "maxZoom": 14,
+          "loaded": 276,
+          "total": 276,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 130.72096772102978,
+          "atNativeLimit": false,
+          "cached": 284,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "eox-sentinel-2025",
+              "requests": 256,
+              "succeeded": 256,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 7,
+              "p95Ms": 16,
+              "ttfbP95Ms": 11,
+              "queueP95Ms": 199,
+              "bytes": 505344,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "eox-sentinel-2025",
+              "label": "Sentinel-2 cloudless 2025 © EOX · CC BY-NC-SA 4.0",
+              "url": "https://cloudless.eox.at/license-non-commercial"
+            }
+          ]
+        },
+        "city": {
+          "active": true,
+          "mode": "auto",
+          "source": "osm-standard",
+          "sourceName": "OpenStreetMap · 街道与建筑轮廓",
+          "attribution": "© OpenStreetMap contributors",
+          "attributionUrl": "https://www.openstreetmap.org/copyright",
+          "zoom": 15,
+          "maxZoom": 19,
+          "loaded": 180,
+          "total": 180,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 4.085030241282181,
+          "atNativeLimit": false,
+          "cached": 470,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "eox-sentinel-2025",
+              "requests": 70,
+              "succeeded": 70,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 9,
+              "p95Ms": 39,
+              "ttfbP95Ms": 26,
+              "queueP95Ms": 217,
+              "bytes": 138180,
+              "relayHits": 0,
+              "errors": []
+            },
+            {
+              "source": "osm-standard",
+              "requests": 186,
+              "succeeded": 186,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 8,
+              "p95Ms": 11,
+              "ttfbP95Ms": 5,
+              "queueP95Ms": 180,
+              "bytes": 367164,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "osm-standard",
+              "label": "© OpenStreetMap contributors",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        },
+        "pixels": {
+          "bright": 1,
+          "edges": 0.3445086705202312
+        }
+      }
+    },
+    {
+      "name": "Street-block and 150 m views preserve full resolution and camera precision",
+      "passed": true,
+      "details": {
+        "block": {
+          "active": true,
+          "mode": "auto",
+          "source": "osm-standard",
+          "sourceName": "OpenStreetMap · 街道与建筑轮廓",
+          "attribution": "© OpenStreetMap contributors",
+          "attributionUrl": "https://www.openstreetmap.org/copyright",
+          "zoom": 19,
+          "maxZoom": 19,
+          "loaded": 120,
+          "total": 120,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 0.2553143900801363,
+          "atNativeLimit": false,
+          "cached": 596,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "osm-standard",
+              "requests": 256,
+              "succeeded": 256,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 7,
+              "p95Ms": 11,
+              "ttfbP95Ms": 6,
+              "queueP95Ms": 178,
+              "bytes": 505344,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "osm-standard",
+              "label": "© OpenStreetMap contributors",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        },
+        "close": {
+          "active": true,
+          "mode": "auto",
+          "source": "osm-standard",
+          "sourceName": "OpenStreetMap · 街道与建筑轮廓",
+          "attribution": "© OpenStreetMap contributors",
+          "attributionUrl": "https://www.openstreetmap.org/copyright",
+          "zoom": 19,
+          "maxZoom": 19,
+          "loaded": 8,
+          "total": 8,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 0.2553143900801363,
+          "atNativeLimit": true,
+          "cached": 596,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "osm-standard",
+              "requests": 256,
+              "succeeded": 256,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 7,
+              "p95Ms": 11,
+              "ttfbP95Ms": 6,
+              "queueP95Ms": 178,
+              "bytes": 505344,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "osm-standard",
+              "label": "© OpenStreetMap contributors",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        },
+        "dragLongitude": -0.00025031511660245087
+      }
+    },
+    {
+      "name": "Visible parents survive failures and manual retry respects provider cooldown",
+      "passed": true,
+      "details": {
+        "loading": {
+          "active": true,
+          "mode": "auto",
+          "source": "osm-standard",
+          "sourceName": "OpenStreetMap · 街道与建筑轮廓",
+          "attribution": "© OpenStreetMap contributors",
+          "attributionUrl": "https://www.openstreetmap.org/copyright",
+          "zoom": 15,
+          "maxZoom": 19,
+          "loaded": 0,
+          "total": 180,
+          "pending": 8,
+          "failed": 0,
+          "metersPerTexel": 4.085030241282181,
+          "atNativeLimit": false,
+          "cached": 640,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "osm-standard",
+              "requests": 256,
+              "succeeded": 256,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 7,
+              "p95Ms": 11,
+              "ttfbP95Ms": 6,
+              "queueP95Ms": 178,
+              "bytes": 505344,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "osm-standard",
+              "label": "© OpenStreetMap contributors",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        },
+        "failed": {
+          "active": true,
+          "mode": "auto",
+          "source": "osm-standard",
+          "sourceName": "OpenStreetMap · 街道与建筑轮廓",
+          "attribution": "© OpenStreetMap contributors",
+          "attributionUrl": "https://www.openstreetmap.org/copyright",
+          "zoom": 15,
+          "maxZoom": 19,
+          "loaded": 0,
+          "total": 180,
+          "pending": 0,
+          "failed": 4,
+          "metersPerTexel": 4.085030241282181,
+          "atNativeLimit": false,
+          "cached": 640,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "osm-standard",
+              "requests": 256,
+              "succeeded": 245,
+              "failed": 4,
+              "cancelled": 7,
+              "timeouts": 0,
+              "p50Ms": 7,
+              "p95Ms": 11,
+              "ttfbP95Ms": 6,
+              "queueP95Ms": 180,
+              "bytes": 483630,
+              "relayHits": 0,
+              "errors": [
+                "http-503"
+              ]
+            }
+          ],
+          "credits": [
+            {
+              "id": "osm-standard",
+              "label": "© OpenStreetMap contributors",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        },
+        "beforeRetry": 329,
+        "afterRetry": 329
+      }
+    },
+    {
+      "name": "Changing source keeps the previous image and credits until replacement is ready",
+      "passed": true,
+      "details": {
+        "transition": {
+          "active": true,
+          "mode": "satellite",
+          "source": "eox-sentinel-2025",
+          "sourceName": "Sentinel-2 · 10 m",
+          "attribution": "Sentinel-2 cloudless 2025 © EOX · CC BY-NC-SA 4.0",
+          "attributionUrl": "https://cloudless.eox.at/license-non-commercial",
+          "zoom": 14,
+          "maxZoom": 14,
+          "loaded": 0,
+          "total": 45,
+          "pending": 8,
+          "failed": 0,
+          "metersPerTexel": 8.170060482564361,
+          "atNativeLimit": true,
+          "cached": 640,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "osm-standard",
+              "requests": 256,
+              "succeeded": 245,
+              "failed": 4,
+              "cancelled": 7,
+              "timeouts": 0,
+              "p50Ms": 7,
+              "p95Ms": 11,
+              "ttfbP95Ms": 6,
+              "queueP95Ms": 180,
+              "bytes": 483630,
+              "relayHits": 0,
+              "errors": [
+                "http-503"
+              ]
+            }
+          ],
+          "credits": [
+            {
+              "id": "eox-sentinel-2025",
+              "label": "Sentinel-2 cloudless 2025 © EOX · CC BY-NC-SA 4.0",
+              "url": "https://cloudless.eox.at/license-non-commercial"
+            },
+            {
+              "id": "osm-standard",
+              "label": "© OpenStreetMap contributors",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        },
+        "replacement": {
+          "active": true,
+          "mode": "satellite",
+          "source": "eox-sentinel-2025",
+          "sourceName": "Sentinel-2 · 10 m",
+          "attribution": "Sentinel-2 cloudless 2025 © EOX · CC BY-NC-SA 4.0",
+          "attributionUrl": "https://cloudless.eox.at/license-non-commercial",
+          "zoom": 14,
+          "maxZoom": 14,
+          "loaded": 45,
+          "total": 45,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 8.170060482564361,
+          "atNativeLimit": true,
+          "cached": 640,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "osm-standard",
+              "requests": 207,
+              "succeeded": 196,
+              "failed": 4,
+              "cancelled": 7,
+              "timeouts": 0,
+              "p50Ms": 7,
+              "p95Ms": 11,
+              "ttfbP95Ms": 6,
+              "queueP95Ms": 183,
+              "bytes": 386904,
+              "relayHits": 0,
+              "errors": [
+                "http-503"
+              ]
+            },
+            {
+              "source": "eox-sentinel-2025",
+              "requests": 49,
+              "succeeded": 49,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 6,
+              "p95Ms": 642,
+              "ttfbP95Ms": 639,
+              "queueP95Ms": 667,
+              "bytes": 96726,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "eox-sentinel-2025",
+              "label": "Sentinel-2 cloudless 2025 © EOX · CC BY-NC-SA 4.0",
+              "url": "https://cloudless.eox.at/license-non-commercial"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Regional aerial sources and antimeridian city requests use valid XYZ coordinates",
+      "passed": true,
+      "details": {
+        "japan": {
+          "active": true,
+          "mode": "auto",
+          "source": "gsi-seamlessphoto",
+          "sourceName": "国土地理院 · 航空影像",
+          "attribution": "地理院タイル（国土地理院）",
+          "attributionUrl": "https://maps.gsi.go.jp/development/ichiran.html",
+          "zoom": 18,
+          "maxZoom": 18,
+          "loaded": 32,
+          "total": 32,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 0.4850919859879728,
+          "atNativeLimit": true,
+          "cached": 36,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.55,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "gsi-seamlessphoto",
+              "requests": 36,
+              "succeeded": 36,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 14,
+              "p95Ms": 21,
+              "ttfbP95Ms": 14,
+              "queueP95Ms": 54,
+              "bytes": 71064,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "gsi-seamlessphoto",
+              "label": "地理院タイル（国土地理院）",
+              "url": "https://maps.gsi.go.jp/development/ichiran.html"
+            }
+          ]
+        },
+        "unitedStates": {
+          "active": true,
+          "mode": "auto",
+          "source": "usgs-naip",
+          "sourceName": "USGS NAIP · 航空影像",
+          "attribution": "USGS / USDA NAIP · Public domain",
+          "attributionUrl": "https://www.usgs.gov/the-national-map-data-delivery/gis-data-download",
+          "zoom": 19,
+          "maxZoom": 19,
+          "loaded": 144,
+          "total": 144,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 0.2263218706786734,
+          "atNativeLimit": false,
+          "cached": 186,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.55,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "gsi-seamlessphoto",
+              "requests": 36,
+              "succeeded": 36,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 14,
+              "p95Ms": 21,
+              "ttfbP95Ms": 14,
+              "queueP95Ms": 54,
+              "bytes": 71064,
+              "relayHits": 0,
+              "errors": []
+            },
+            {
+              "source": "usgs-naip",
+              "requests": 150,
+              "succeeded": 150,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 8,
+              "p95Ms": 13,
+              "ttfbP95Ms": 6,
+              "queueP95Ms": 151,
+              "bytes": 296100,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "usgs-naip",
+              "label": "USGS / USDA NAIP · Public domain",
+              "url": "https://www.usgs.gov/the-national-map-data-delivery/gis-data-download"
+            }
+          ]
+        },
+        "dateline": {
+          "active": true,
+          "mode": "auto",
+          "source": "osm-standard",
+          "sourceName": "OpenStreetMap · 街道与建筑轮廓",
+          "attribution": "© OpenStreetMap contributors",
+          "attributionUrl": "https://www.openstreetmap.org/copyright",
+          "zoom": 15,
+          "maxZoom": 19,
+          "loaded": 128,
+          "total": 128,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 4.777314267823516,
+          "atNativeLimit": false,
+          "cached": 318,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.55,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "usgs-naip",
+              "requests": 124,
+              "succeeded": 124,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 8,
+              "p95Ms": 13,
+              "ttfbP95Ms": 7,
+              "queueP95Ms": 152,
+              "bytes": 244776,
+              "relayHits": 0,
+              "errors": []
+            },
+            {
+              "source": "osm-standard",
+              "requests": 132,
+              "succeeded": 132,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 7,
+              "p95Ms": 12,
+              "ttfbP95Ms": 6,
+              "queueP95Ms": 122,
+              "bytes": 260568,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "osm-standard",
+              "label": "© OpenStreetMap contributors",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Mobile city view keeps 3× sampling, city LOD, and accessible controls",
+      "passed": true,
+      "details": {
+        "tiles": {
+          "active": true,
+          "mode": "auto",
+          "source": "osm-standard",
+          "sourceName": "OpenStreetMap · 街道与建筑轮廓",
+          "attribution": "© OpenStreetMap contributors",
+          "attributionUrl": "https://www.openstreetmap.org/copyright",
+          "zoom": 19,
+          "maxZoom": 19,
+          "loaded": 96,
+          "total": 96,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 0.2553143900801363,
+          "atNativeLimit": false,
+          "cached": 116,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.55,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [
+            {
+              "source": "osm-standard",
+              "requests": 116,
+              "succeeded": 116,
+              "failed": 0,
+              "cancelled": 0,
+              "timeouts": 0,
+              "p50Ms": 6,
+              "p95Ms": 11,
+              "ttfbP95Ms": 5,
+              "queueP95Ms": 69,
+              "bytes": 228984,
+              "relayHits": 0,
+              "errors": []
+            }
+          ],
+          "credits": [
+            {
+              "id": "osm-standard",
+              "label": "© OpenStreetMap contributors",
+              "url": "https://www.openstreetmap.org/copyright"
+            }
+          ]
+        },
+        "pixelRatio": 3
+      }
+    },
+    {
+      "name": "No uncaught browser errors in city workflows",
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "finishedAt": "2026-10-01T03:42:17.601Z",
+  "passed": true
+}

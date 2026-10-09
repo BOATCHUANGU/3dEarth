@@ -1,0 +1,22 @@
+[
+  {
+    "scenario": "high-resolution-fallback",
+    "passed": true
+  },
+  {
+    "scenario": "missing-optional-layer",
+    "passed": true
+  },
+  {
+    "scenario": "missing-day-map",
+    "passed": true
+  },
+  {
+    "scenario": "webgl-unavailable",
+    "passed": true
+  },
+  {
+    "scenario": "context-lost",
+    "passed": true
+  }
+]

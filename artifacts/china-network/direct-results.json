@@ -1,0 +1,30 @@
+{
+  "baseURL": "http://127.0.0.1:4173",
+  "direct": true,
+  "startedAt": "2026-10-01T03:38:20.961Z",
+  "checks": [
+    {
+      "name": "China streets and satellite use distinct compatible layers",
+      "passed": true,
+      "details": {
+        "street": {
+          "source": "tianditu-vec",
+          "zoom": 14,
+          "labelsLoaded": 40
+        },
+        "satellite": {
+          "source": "tianditu-img",
+          "zoom": 14
+        },
+        "requests": 133
+      }
+    }
+  ],
+  "browser": {
+    "channel": "msedge",
+    "version": "154.0.4258.37",
+    "headless": true
+  },
+  "finishedAt": "2026-10-01T03:38:24.397Z",
+  "passed": true
+}

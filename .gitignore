@@ -1,0 +1,31 @@
+node_modules/
+dist/
+# Keep the validation report and evidence referenced by project documentation.
+artifacts/*
+!artifacts/china-network/
+!artifacts/phase2-shanghai-city.png
+!artifacts/phase2-shanghai-streets.png
+!artifacts/phase2-tokyo-aerial.png
+artifacts/china-network/*
+!artifacts/china-network/*.md
+!artifacts/china-network/*.json
+!artifacts/china-network/*.png
+test-results/
+playwright-report/
+*.log
+.DS_Store
+# Environment files may contain credentials. Commit only example templates.
+.env*
+!.env.example
+!.env.*.example
+*.jks
+*.keystore
+keystore.properties
+*.apk
+*.aab
+android/.gradle/
+android/local.properties
+android/**/build/
+android/**/captures/
+android/.idea/
+android/app/src/main/assets/public/

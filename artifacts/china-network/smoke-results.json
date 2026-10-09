@@ -1,0 +1,746 @@
+{
+  "startedAt": "2026-10-01T03:41:40.028Z",
+  "baseURL": "http://127.0.0.1:4173",
+  "checks": [
+    {
+      "name": "Desktop initializes with a visible WebGL canvas",
+      "passed": true,
+      "durationMs": 9,
+      "details": {
+        "rendering": {
+          "webgl2": true,
+          "lost": false,
+          "width": 2074,
+          "height": 1360
+        },
+        "state": {
+          "latitude": 22.000000000000004,
+          "longitude": 114.39507661322679,
+          "altitude": 12756273.999999972,
+          "autoRotate": true,
+          "layers": {
+            "clouds": true,
+            "atmosphere": true,
+            "night": true,
+            "markers": true,
+            "grid": false
+          },
+          "ready": true,
+          "fps": 180,
+          "tiles": {
+            "active": false,
+            "mode": "auto",
+            "source": "",
+            "sourceName": "全球影像",
+            "attribution": "",
+            "attributionUrl": "",
+            "zoom": 0,
+            "maxZoom": 19,
+            "loaded": 0,
+            "total": 0,
+            "pending": 0,
+            "failed": 0,
+            "metersPerTexel": 145144.1736029804,
+            "atNativeLimit": false,
+            "cached": 0,
+            "network": {
+              "preference": "auto",
+              "region": "global",
+              "reason": "部署配置",
+              "online": true,
+              "effectiveType": "4g",
+              "rtt": 100,
+              "downlink": 1.7,
+              "saveData": false,
+              "concurrency": 8,
+              "timeoutMs": 12000,
+              "chinaAvailable": true,
+              "transport": "relay",
+              "configuration": "ready"
+            },
+            "fallback": false,
+            "labelsTotal": 0,
+            "labelsLoaded": 0,
+            "labelsFailed": 0,
+            "diagnostics": [],
+            "credits": []
+          },
+          "pixelRatio": 2,
+          "isFlying": false,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          }
+        }
+      }
+    },
+    {
+      "name": "Pause rotation and fly to Tokyo through its destination card",
+      "passed": true,
+      "durationMs": 1834,
+      "details": {
+        "latitude": 35.676200000000016,
+        "longitude": 139.6503,
+        "altitude": 12000000.798405558,
+        "autoRotate": false,
+        "layers": {
+          "clouds": true,
+          "atmosphere": true,
+          "night": true,
+          "markers": true,
+          "grid": false
+        },
+        "ready": true,
+        "fps": 180,
+        "tiles": {
+          "active": false,
+          "mode": "auto",
+          "source": "",
+          "sourceName": "全球影像",
+          "attribution": "",
+          "attributionUrl": "",
+          "zoom": 0,
+          "maxZoom": 19,
+          "loaded": 0,
+          "total": 0,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 127163.95357483112,
+          "atNativeLimit": false,
+          "cached": 0,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [],
+          "credits": []
+        },
+        "pixelRatio": 2,
+        "isFlying": true,
+        "network": {
+          "preference": "auto",
+          "region": "global",
+          "reason": "部署配置",
+          "online": true,
+          "effectiveType": "4g",
+          "rtt": 100,
+          "downlink": 1.7,
+          "saveData": false,
+          "concurrency": 8,
+          "timeoutMs": 12000,
+          "chinaAvailable": true,
+          "transport": "relay",
+          "configuration": "ready"
+        }
+      }
+    },
+    {
+      "name": "Zoom buttons change camera height in the expected directions",
+      "passed": true,
+      "durationMs": 1648,
+      "details": {
+        "initial": 11999999.999999996,
+        "closer": 9959999.999999996,
+        "farther": 11951999.999999993
+      }
+    },
+    {
+      "name": "All five layer controls work and maximum quality remains enabled",
+      "passed": true,
+      "durationMs": 225,
+      "details": {
+        "clouds": true,
+        "atmosphere": true,
+        "night": true,
+        "markers": true,
+        "grid": false
+      }
+    },
+    {
+      "name": "Sun presets, time slider, and realtime mode update the UI",
+      "passed": true,
+      "durationMs": 88
+    },
+    {
+      "name": "Search accepts custom coordinates and rejects invalid ones",
+      "passed": true,
+      "durationMs": 1304,
+      "details": {
+        "invalidAPI": {
+          "name": "RangeError",
+          "message": "纬度须在 -90 至 90，经度须在 -180 至 180 之间。"
+        },
+        "customFocus": {
+          "latitude": -33.868799999999986,
+          "longitude": 151.20930000000004,
+          "altitude": 12000000.000000007,
+          "autoRotate": false,
+          "layers": {
+            "clouds": true,
+            "atmosphere": true,
+            "night": true,
+            "markers": true,
+            "grid": false
+          },
+          "ready": true,
+          "fps": 180,
+          "tiles": {
+            "active": false,
+            "mode": "auto",
+            "source": "",
+            "sourceName": "全球影像",
+            "attribution": "",
+            "attributionUrl": "",
+            "zoom": 0,
+            "maxZoom": 19,
+            "loaded": 0,
+            "total": 0,
+            "pending": 0,
+            "failed": 0,
+            "metersPerTexel": 129980.1666705023,
+            "atNativeLimit": false,
+            "cached": 0,
+            "network": {
+              "preference": "auto",
+              "region": "global",
+              "reason": "部署配置",
+              "online": true,
+              "effectiveType": "4g",
+              "rtt": 100,
+              "downlink": 1.7,
+              "saveData": false,
+              "concurrency": 8,
+              "timeoutMs": 12000,
+              "chinaAvailable": true,
+              "transport": "relay",
+              "configuration": "ready"
+            },
+            "fallback": false,
+            "labelsTotal": 0,
+            "labelsLoaded": 0,
+            "labelsFailed": 0,
+            "diagnostics": [],
+            "credits": []
+          },
+          "pixelRatio": 2,
+          "isFlying": true,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          }
+        }
+      }
+    },
+    {
+      "name": "Dragging the actual canvas rotates the globe",
+      "passed": true,
+      "durationMs": 79,
+      "details": {
+        "start": {
+          "latitude": -33.868799999999986,
+          "longitude": 151.20930000000004,
+          "altitude": 12000000.000000007,
+          "autoRotate": false,
+          "layers": {
+            "clouds": true,
+            "atmosphere": true,
+            "night": true,
+            "markers": true,
+            "grid": false
+          },
+          "ready": true,
+          "fps": 180,
+          "tiles": {
+            "active": false,
+            "mode": "auto",
+            "source": "",
+            "sourceName": "全球影像",
+            "attribution": "",
+            "attributionUrl": "",
+            "zoom": 0,
+            "maxZoom": 19,
+            "loaded": 0,
+            "total": 0,
+            "pending": 0,
+            "failed": 0,
+            "metersPerTexel": 129980.1666705023,
+            "atNativeLimit": false,
+            "cached": 0,
+            "network": {
+              "preference": "auto",
+              "region": "global",
+              "reason": "部署配置",
+              "online": true,
+              "effectiveType": "4g",
+              "rtt": 100,
+              "downlink": 1.7,
+              "saveData": false,
+              "concurrency": 8,
+              "timeoutMs": 12000,
+              "chinaAvailable": true,
+              "transport": "relay",
+              "configuration": "ready"
+            },
+            "fallback": false,
+            "labelsTotal": 0,
+            "labelsLoaded": 0,
+            "labelsFailed": 0,
+            "diagnostics": [],
+            "credits": []
+          },
+          "pixelRatio": 2,
+          "isFlying": true,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          }
+        },
+        "end": {
+          "latitude": -30.45668201716823,
+          "longitude": 132.1207479977939,
+          "altitude": 12000000.000000007,
+          "autoRotate": false,
+          "layers": {
+            "clouds": true,
+            "atmosphere": true,
+            "night": true,
+            "markers": true,
+            "grid": false
+          },
+          "ready": true,
+          "fps": 180,
+          "tiles": {
+            "active": false,
+            "mode": "auto",
+            "source": "",
+            "sourceName": "全球影像",
+            "attribution": "",
+            "attributionUrl": "",
+            "zoom": 0,
+            "maxZoom": 19,
+            "loaded": 0,
+            "total": 0,
+            "pending": 0,
+            "failed": 0,
+            "metersPerTexel": 134942.073038762,
+            "atNativeLimit": false,
+            "cached": 0,
+            "network": {
+              "preference": "auto",
+              "region": "global",
+              "reason": "部署配置",
+              "online": true,
+              "effectiveType": "4g",
+              "rtt": 100,
+              "downlink": 1.7,
+              "saveData": false,
+              "concurrency": 8,
+              "timeoutMs": 12000,
+              "chinaAvailable": true,
+              "transport": "relay",
+              "configuration": "ready"
+            },
+            "fallback": false,
+            "labelsTotal": 0,
+            "labelsLoaded": 0,
+            "labelsFailed": 0,
+            "diagnostics": [],
+            "credits": []
+          },
+          "pixelRatio": 2,
+          "isFlying": false,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.7,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          }
+        }
+      }
+    },
+    {
+      "name": "Fresh 390×844 mobile layout retains full-resolution textures and sampling",
+      "passed": true,
+      "durationMs": 122,
+      "details": {
+        "width": {
+          "inner": 390,
+          "scroll": 390
+        },
+        "bounds": {
+          "#home": {
+            "x": 22,
+            "y": 18.5,
+            "width": 119.609375,
+            "height": 35
+          },
+          "#open-search": {
+            "x": 337,
+            "y": 20.5,
+            "width": 31,
+            "height": 31
+          },
+          "#viewport canvas": {
+            "x": 0,
+            "y": 193,
+            "width": 390,
+            "height": 337
+          },
+          "#layers-toggle": {
+            "x": 339,
+            "y": 448,
+            "width": 31,
+            "height": 31
+          },
+          "#sun-toggle": {
+            "x": 339,
+            "y": 486,
+            "width": 31,
+            "height": 31
+          },
+          "#rotation-toggle": {
+            "x": 192.984375,
+            "y": 648,
+            "width": 109.5,
+            "height": 29
+          },
+          ".location-detail": {
+            "x": 25,
+            "y": 556,
+            "width": 340,
+            "height": 70
+          },
+          ".destination-section": {
+            "x": 22,
+            "y": 695,
+            "width": 346,
+            "height": 111
+          },
+          ".footer": {
+            "x": 25,
+            "y": 806,
+            "width": 340,
+            "height": 38
+          }
+        },
+        "canvas": {
+          "actual": 780,
+          "css": 390
+        },
+        "textures": [
+          {
+            "path": "/textures/earth-day-2k.jpg",
+            "status": 200
+          },
+          {
+            "path": "/textures/earth-day-ultra.jpg",
+            "status": 200
+          },
+          {
+            "path": "/textures/earth-night.jpg",
+            "status": 200
+          },
+          {
+            "path": "/textures/earth-clouds.jpg",
+            "status": 200
+          },
+          {
+            "path": "/textures/earth-specular.png",
+            "status": 200
+          }
+        ],
+        "maxTextureSize": 16384
+      }
+    },
+    {
+      "name": "Mobile destination remains clickable and geographically correct",
+      "passed": true,
+      "durationMs": 1825,
+      "details": {
+        "latitude": 35.67620000000001,
+        "longitude": 139.6503,
+        "altitude": 12000000.716065064,
+        "autoRotate": false,
+        "layers": {
+          "clouds": true,
+          "atmosphere": true,
+          "night": true,
+          "markers": true,
+          "grid": false
+        },
+        "ready": true,
+        "fps": 180,
+        "tiles": {
+          "active": false,
+          "mode": "auto",
+          "source": "",
+          "sourceName": "全球影像",
+          "attribution": "",
+          "attributionUrl": "",
+          "zoom": 0,
+          "maxZoom": 19,
+          "loaded": 0,
+          "total": 0,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 127163.95357483115,
+          "atNativeLimit": false,
+          "cached": 0,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.55,
+            "saveData": false,
+            "concurrency": 8,
+            "timeoutMs": 12000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [],
+          "credits": []
+        },
+        "pixelRatio": 2,
+        "isFlying": true,
+        "network": {
+          "preference": "auto",
+          "region": "global",
+          "reason": "部署配置",
+          "online": true,
+          "effectiveType": "4g",
+          "rtt": 100,
+          "downlink": 1.55,
+          "saveData": false,
+          "concurrency": 8,
+          "timeoutMs": 12000,
+          "chinaAvailable": true,
+          "transport": "relay",
+          "configuration": "ready"
+        }
+      }
+    },
+    {
+      "name": "Reduced motion disables initial rotation and makes focus immediate",
+      "passed": true,
+      "durationMs": 11,
+      "details": {
+        "latitude": -33.868799999999986,
+        "longitude": 151.2093,
+        "altitude": 9000000,
+        "autoRotate": false,
+        "layers": {
+          "clouds": true,
+          "atmosphere": true,
+          "night": true,
+          "markers": true,
+          "grid": false
+        },
+        "ready": true,
+        "fps": 176,
+        "tiles": {
+          "active": false,
+          "mode": "auto",
+          "source": "",
+          "sourceName": "全球影像",
+          "attribution": "",
+          "attributionUrl": "",
+          "zoom": 0,
+          "maxZoom": 19,
+          "loaded": 0,
+          "total": 0,
+          "pending": 0,
+          "failed": 0,
+          "metersPerTexel": 145144.1736029804,
+          "atNativeLimit": false,
+          "cached": 0,
+          "network": {
+            "preference": "auto",
+            "region": "global",
+            "reason": "部署配置",
+            "online": true,
+            "effectiveType": "4g",
+            "rtt": 100,
+            "downlink": 1.45,
+            "saveData": false,
+            "concurrency": 4,
+            "timeoutMs": 20000,
+            "chinaAvailable": true,
+            "transport": "relay",
+            "configuration": "ready"
+          },
+          "fallback": false,
+          "labelsTotal": 0,
+          "labelsLoaded": 0,
+          "labelsFailed": 0,
+          "diagnostics": [],
+          "credits": []
+        },
+        "pixelRatio": 2,
+        "isFlying": false,
+        "network": {
+          "preference": "auto",
+          "region": "global",
+          "reason": "部署配置",
+          "online": true,
+          "effectiveType": "4g",
+          "rtt": 100,
+          "downlink": 1.45,
+          "saveData": false,
+          "concurrency": 4,
+          "timeoutMs": 20000,
+          "chinaAvailable": true,
+          "transport": "relay",
+          "configuration": "ready"
+        }
+      }
+    },
+    {
+      "name": "No browser console errors, page exceptions, or failed requests",
+      "passed": true,
+      "durationMs": 1
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailures": [],
+  "textureRequests": {
+    "desktop": [
+      {
+        "path": "/textures/earth-day-2k.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-day-ultra.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-night.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-specular.png",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-clouds.jpg",
+        "status": 200
+      }
+    ],
+    "mobile": [
+      {
+        "path": "/textures/earth-day-2k.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-day-ultra.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-night.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-clouds.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-specular.png",
+        "status": 200
+      }
+    ],
+    "reduced-motion": [
+      {
+        "path": "/textures/earth-day-2k.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-day-ultra.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-night.jpg",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-specular.png",
+        "status": 200
+      },
+      {
+        "path": "/textures/earth-clouds.jpg",
+        "status": 200
+      }
+    ]
+  },
+  "browser": {
+    "channel": "msedge",
+    "version": "154.0.4258.37",
+    "headless": true
+  },
+  "finishedAt": "2026-10-01T03:41:55.052Z",
+  "passed": true
+}

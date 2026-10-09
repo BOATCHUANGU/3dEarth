@@ -1,0 +1,16 @@
+{
+  "checked": 3360,
+  "polar": 756,
+  "failures": 0,
+  "maximum": {
+    "count": 27060,
+    "latitude": 30,
+    "altitude": 150000,
+    "width": 3840,
+    "height": 320,
+    "dpr": 3,
+    "zoom": 11
+  },
+  "examples": [],
+  "allFailures": []
+}

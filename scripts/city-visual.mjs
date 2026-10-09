@@ -1,0 +1,23 @@
+import { chromium } from '@playwright/test';
+import { mkdir, writeFile } from 'node:fs/promises';
+
+await mkdir('artifacts', { recursive: true });
+const browser = await chromium.launch({ channel: 'msedge', headless: true });
+const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
+const errors = [], failed = [];
+page.on('pageerror', error => errors.push(error.message));
+page.on('requestfailed', request => { if (!request.failure()?.errorText.includes('ABORTED')) failed.push({ url: request.url(), error: request.failure()?.errorText }); });
+await page.goto('http://127.0.0.1:5173');
+await page.waitForFunction(() => window.earth?.getState().ready);
+await page.screenshot({ path: 'artifacts/phase2-globe.png' });
+await page.evaluate(() => window.earth.focusOn(31.2304, 121.4737, 12000));
+await page.waitForFunction(() => window.earth?.getState().tiles?.loaded > 0, null, { timeout: 60000 });
+await page.waitForFunction(() => { const t = window.earth?.getState().tiles; return t && t.total > 0 && t.loaded === t.total; }, null, { timeout: 90000 }).catch(() => {});
+await page.screenshot({ path: 'artifacts/phase2-shanghai-city.png' });
+console.log('SHANGHAI', JSON.stringify(await page.evaluate(() => window.earth.getState())));
+await page.evaluate(() => window.earth.focusOn(31.2304, 121.4737, 600));
+await page.waitForFunction(() => { const t = window.earth?.getState().tiles; return t && t.zoom >= 18 && t.loaded === t.total && t.total > 0; }, null, { timeout: 90000 }).catch(() => {});
+await page.screenshot({ path: 'artifacts/phase2-shanghai-streets.png' });
+console.log('STREETS', JSON.stringify(await page.evaluate(() => window.earth.getState())));
+await writeFile('artifacts/city-visual-results.json', JSON.stringify({ errors, failed, state: await page.evaluate(() => window.earth.getState()) }, null, 2));
+await browser.close();

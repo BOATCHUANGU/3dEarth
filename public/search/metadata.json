@@ -1,0 +1,34 @@
+{
+  "snapshotRetrieved": "2026-10-04",
+  "license": "CC BY 4.0",
+  "attribution": "GeoNames",
+  "sources": [
+    {
+      "url": "http://download.geonames.org/export/dump/countryInfo.txt",
+      "lastModified": "Sun, 04 Oct 2026 03:41:04 GMT",
+      "bytes": 31678,
+      "sha256": "93bafc525813f22e4711ff9ed6d626343094ce48c26388dc7c49189b3d7d5512"
+    },
+    {
+      "url": "http://download.geonames.org/export/dump/admin1CodesASCII.txt",
+      "lastModified": "Sun, 04 Oct 2026 03:33:31 GMT",
+      "bytes": 151583,
+      "sha256": "1da92a6323a5fec3176f3f743bf4cf4040fd56a876da55e46fbca23c863aa60a"
+    },
+    {
+      "url": "http://download.geonames.org/export/dump/cities15000.zip",
+      "lastModified": "Sun, 04 Oct 2026 03:33:31 GMT",
+      "bytes": 3360048,
+      "sha256": "4d91d34a56966f1b6c7ae192e171bd721b47f7b86848955679ed20bd032d4aba"
+    }
+  ],
+  "coordinateSystem": "WGS84",
+  "filter": "cities15000, class P; population >= 15000 or PPLC/PPLA; exclude PPLX/PPLQ/PPLH/PPLW",
+  "aliases": "All nonempty distinct name, asciiname and alternatenames from each selected row; no language inference",
+  "cities": 31729,
+  "countryCodes": 244,
+  "jsonBytes": 7952531,
+  "gzipBytes": 3473691,
+  "jsonSha256": "8fb24ae1de7b6b69a1088b563fd58c6497d7f1e420cfc91acf1c176ed91e2fbe",
+  "gzipSha256": "45ca53c0cfaaf225202587d2d743ae39a0abc0e615281219a10557770fda9f32"
+}

@@ -1,0 +1,250 @@
+/* SystemBars owns insets. Its variables are zero when older WebViews are inset natively. */
+.native-android {
+  --app-safe-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --app-safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  --app-safe-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  --app-safe-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  background: #080d14;
+  color-scheme: dark;
+}
+.native-android body {
+  margin: 0;
+  overflow: hidden;
+}
+.native-android #app {
+  height: 100dvh;
+  min-height: 0;
+  width: 100%;
+  padding: var(--app-safe-top) var(--app-safe-right) var(--app-safe-bottom) var(--app-safe-left);
+}
+.native-android .topbar {
+  height: clamp(56px, 10dvh, 84px);
+  min-height: 0;
+  flex-shrink: 0;
+  margin-inline: clamp(12px, 3vw, 48px);
+  gap: 12px;
+}
+.native-android .brand,
+.native-android .search-trigger,
+.native-android .icon-button,
+.native-android .footer > button,
+.native-android .map-modes button,
+.native-android .time-presets button {
+  min-height: 48px;
+  min-width: 48px;
+}
+.native-android .search-trigger {
+  margin-left: auto;
+}
+.native-android .experience {
+  min-height: 0;
+  container-type: size;
+}
+.native-android .toolbar {
+  right: clamp(12px, 2vw, 32px);
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  gap: 10px;
+}
+.native-android .toolbar button {
+  width: 48px;
+  height: 48px;
+}
+.native-android .toolbar #fullscreen {
+  display: flex;
+}
+.native-android .rotation-button {
+  width: 48px;
+  height: 48px;
+}
+.native-android .view-bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  padding-inline: clamp(12px, 3vw, 32px);
+}
+.native-android .altitude-readout {
+  max-width: calc(50% - 40px);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.native-android .tile-attribution {
+  bottom: 60px;
+  font-size: 9px;
+  max-width: calc(100% - 32px);
+}
+.native-android .compass {
+  top: 12px;
+  right: 16px;
+}
+.native-android .floating-panel {
+  width: min(340px, calc(100% - 88px));
+  max-width: none;
+  right: 76px;
+  top: 12px;
+  bottom: auto;
+  transform: none;
+  max-height: calc(100% - 24px);
+  padding: 16px;
+  overscroll-behavior: contain;
+}
+.native-android .panel-title {
+  position: sticky;
+  top: -16px;
+  background: #111a24;
+  z-index: 1;
+}
+.native-android .layer-row {
+  min-height: 52px;
+}
+.native-android .footer {
+  height: 48px;
+  min-height: 48px;
+  margin-inline: clamp(12px, 3vw, 48px);
+}
+.native-android .footer > button {
+  font-size: 10px;
+}
+.native-android dialog {
+  inset: var(--app-safe-top) var(--app-safe-right) var(--app-safe-bottom) var(--app-safe-left);
+  margin: auto;
+  width: min(540px, calc(100% - var(--app-safe-left) - var(--app-safe-right) - 24px));
+  max-width: none;
+  max-height: calc(100dvh - var(--app-safe-top) - var(--app-safe-bottom) - 24px);
+  padding: clamp(16px, 3vw, 32px);
+  overscroll-behavior: contain;
+  scroll-padding-block: 16px;
+}
+.native-android .search-field input {
+  font-size: 16px;
+  min-width: 0;
+}
+.native-android .search-results {
+  max-height: min(420px, 42dvh);
+}
+.native-android .search-results > button {
+  min-height: 56px;
+}
+.native-android .dialog-close {
+  min-width: 48px;
+  min-height: 48px;
+}
+.native-android .toast {
+  bottom: calc(var(--app-safe-bottom) + 64px);
+  max-width: calc(100% - 32px);
+}
+@media (max-width: 600px) {
+  .native-android .main-nav {
+    display: none;
+  }
+  .native-android .search-trigger span,
+  .native-android .search-trigger kbd {
+    display: none;
+  }
+  .native-android .floating-panel {
+    width: calc(100% - 24px);
+    right: 12px;
+  }
+  .native-android .brand small {
+    display: none;
+  }
+}
+/* A short application viewport includes landscape, split-screen and an open IME. */
+@container (max-height: 420px) {
+  .native-android .toolbar {
+    flex-direction: row;
+    top: 8px;
+    right: 12px;
+    transform: none;
+  }
+  .native-android .tool-group {
+    flex-direction: row;
+  }
+  .native-android .compass {
+    display: none;
+  }
+  .native-android .floating-panel {
+    top: 8px;
+    right: 12px;
+    max-height: calc(100% - 16px);
+    width: min(360px, calc(100% - 24px));
+  }
+  .native-android .detail-status {
+    top: 66px;
+    left: 12px;
+  }
+}
+@container (max-height: 420px) and (max-width: 400px) {
+  .native-android .toolbar {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .native-android .detail-status {
+    top: 118px;
+  }
+}
+@media (max-height: 480px) {
+  .native-android .topbar {
+    height: 52px;
+  }
+  .native-android .main-nav {
+    display: none;
+  }
+  .native-android .footer {
+    height: 48px;
+    min-height: 48px;
+  }
+  .native-android dialog .eyebrow,
+  .native-android .search-dialog h2,
+  .native-android .search-note {
+    display: none;
+  }
+  .native-android .search-field {
+    margin-top: 28px;
+  }
+  .native-android .search-results {
+    max-height: none;
+    min-height: 0;
+    margin-top: 6px;
+  }
+}
+@media (min-width: 1200px) {
+  .native-android .topbar,
+  .native-android .footer {
+    width: min(100% - 64px, 1280px);
+    margin-inline: auto;
+  }
+  .native-android .toolbar {
+    right: max(24px, calc((100% - 1280px) / 2));
+  }
+  .native-android .floating-panel {
+    right: max(88px, calc((100% - 1152px) / 2));
+  }
+}
+/* Landscape IME can leave less than 150 CSS px: keep input and close on one row. */
+@media (max-height: 300px) {
+  .native-android .search-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - var(--app-safe-top) - var(--app-safe-bottom) - 8px);
+    max-height: calc(100dvh - var(--app-safe-top) - var(--app-safe-bottom) - 8px);
+    padding: 8px;
+  }
+  .native-android .search-dialog .dialog-close {
+    top: 8px;
+    right: 8px;
+  }
+  .native-android .search-field {
+    flex: 0 0 48px;
+    margin: 0 56px 0 0;
+    padding: 8px;
+  }
+  .native-android .search-results {
+    flex: 1;
+    min-height: 0;
+    margin-top: 4px;
+  }
+}

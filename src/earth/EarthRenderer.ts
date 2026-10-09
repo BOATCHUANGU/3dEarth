@@ -1,3 +1,4 @@
+import { prefersReducedMotion } from '../app/NativeWindow';
 import {
   AdditiveBlending,
   BackSide,
@@ -122,7 +123,8 @@ export class EarthRenderer {
     this.options.onError('图形连接已中断，请重新载入以恢复地球。');
   };
   private onMotionPreference = () => {
-    if (this.reducedMotion.matches && this.entranceStarted && !this.entranceFinished) {
+    if (prefersReducedMotion() && this.entranceFinished) this.controls.setAutoRotate(false);
+    if (prefersReducedMotion() && this.entranceStarted && !this.entranceFinished) {
       this.finishEntrance();
     }
   };
@@ -171,6 +173,7 @@ export class EarthRenderer {
     this.observer.observe(container);
     document.addEventListener('visibilitychange', this.onVisibility);
     this.reducedMotion.addEventListener('change', this.onMotionPreference);
+    window.addEventListener('earth-motion-change', this.onMotionPreference);
     this.renderer.domElement.addEventListener('webglcontextlost', this.onContextLost);
     this.resize();
   }
@@ -293,10 +296,10 @@ export class EarthRenderer {
     for (const name of Object.keys(this.layers) as LayerName[])
       this.setLayer(name, this.layers[name]);
     // Prepare the first frame before App starts fading the loading overlay.
-    this.globe.scale.setScalar(this.reducedMotion.matches ? 1 : 0.12);
+    this.globe.scale.setScalar(prefersReducedMotion() ? 1 : 0.12);
     this.globe.quaternion.setFromAxisAngle(
       this.entranceAxis(),
-      this.reducedMotion.matches ? 0 : MathUtils.degToRad(40),
+      prefersReducedMotion() ? 0 : MathUtils.degToRad(40),
     );
     this.globe.visible = true;
     this.running = true;
@@ -309,7 +312,7 @@ export class EarthRenderer {
     if (this.disposed || !this.running || this.entranceStarted) return;
     this.entranceStarted = true;
     this.onEntranceComplete = onComplete;
-    if (this.reducedMotion.matches) {
+    if (prefersReducedMotion()) {
       this.finishEntrance();
       return;
     }
@@ -347,7 +350,7 @@ export class EarthRenderer {
     this.markers.visible = this.layers.markers;
     this.markers.update(this.camera, this.width, this.height);
     this.controls.setSuspended(false);
-    if (this.reducedMotion.matches) this.controls.setAutoRotate(false);
+    if (prefersReducedMotion()) this.controls.setAutoRotate(false);
     const complete = this.onEntranceComplete;
     this.onEntranceComplete = undefined;
     complete?.();
@@ -503,7 +506,7 @@ export class EarthRenderer {
     this.bloom.strength = 0.16 * MathUtils.smoothstep(altitude, 150_000, 1_000_000);
     this.output.clarity = 1 - MathUtils.smoothstep(altitude, 150_000, 1_000_000);
     this.tiles?.update(this.camera, this.height * this.renderer.getPixelRatio(), delta);
-    if (this.clouds && this.entranceFinished && !this.reducedMotion.matches)
+    if (this.clouds && this.entranceFinished && !prefersReducedMotion())
       this.clouds.rotation.y += delta * 0.0006;
     this.syncSunDirection();
     this.composer.render(delta);
@@ -534,6 +537,7 @@ export class EarthRenderer {
     this.observer.disconnect();
     document.removeEventListener('visibilitychange', this.onVisibility);
     this.reducedMotion.removeEventListener('change', this.onMotionPreference);
+    window.removeEventListener('earth-motion-change', this.onMotionPreference);
     this.renderer.domElement.removeEventListener('webglcontextlost', this.onContextLost);
     this.controls.dispose();
     this.markers.dispose();

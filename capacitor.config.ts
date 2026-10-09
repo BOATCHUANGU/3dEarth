@@ -7,6 +7,9 @@ const config: CapacitorConfig = {
   appName: 'Earth Observatory',
   webDir: 'dist',
   backgroundColor: '#080d14',
+  plugins: {
+    SystemBars: { style: 'DARK', insetsHandling: 'css', initialViewportFitValueHint: 'cover' },
+  },
   server: {
     androidScheme: 'https',
     cleartext: false,

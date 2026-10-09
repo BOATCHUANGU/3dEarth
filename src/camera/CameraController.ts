@@ -1,3 +1,4 @@
+import { prefersReducedMotion } from '../app/NativeWindow';
 import { PerspectiveCamera, Quaternion, TOUCH, Vector2, Vector3 } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { geodeticToWorld, surfaceNormal, worldToGeodetic, WGS84 } from '../geo/CoordinateSystem';
@@ -42,7 +43,6 @@ export class CameraController {
   private readonly direction = new Vector3();
   private readonly lastNotifiedPosition = new Vector3();
   private readonly touchPointers = new Map<number, Vector2>();
-  private readonly reducedMotion: MediaQueryList | undefined;
   private flight: CameraFlight | null = null;
   private rotating = true;
   private orbitAltitude = INITIAL_ALTITUDE;
@@ -53,11 +53,6 @@ export class CameraController {
     private readonly camera: PerspectiveCamera,
     private readonly domElement: HTMLElement,
   ) {
-    this.reducedMotion =
-      typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-        ? window.matchMedia('(prefers-reduced-motion: reduce)')
-        : undefined;
-
     this.initialPosition = geodeticToWorld(22, 115, INITIAL_ALTITUDE);
     camera.up.set(0, 1, 0);
     camera.position.copy(this.initialPosition);
@@ -77,7 +72,7 @@ export class CameraController {
     this.controls.maxDistance = 1 + MAX_ALTITUDE / WGS84.a;
     this.refreshView();
     this.controls.update(0);
-    this.rotating = !this.reducedMotion?.matches;
+    this.rotating = !prefersReducedMotion();
     this.refreshView();
     this.lastNotifiedPosition.copy(camera.position);
     this.controls.addEventListener('start', this.handleInteraction);
@@ -247,7 +242,7 @@ export class CameraController {
     const endAltitude = clampAltitude(end.altitude);
     destination.copy(geodeticToWorld(end.latitude, end.longitude, endAltitude));
 
-    if (duration === 0 || this.reducedMotion?.matches) {
+    if (duration === 0 || prefersReducedMotion()) {
       this.flight = null;
       this.orbitAltitude = endAltitude;
       this.camera.position.copy(destination);

@@ -368,3 +368,9 @@ window.earth.getState(); // 含 tiles、pixelRatio 与 isFlying
 2026-10-04 索引快照含 31,729 个居民点、244 个国家/地区代码；主要筛选人口 ≥ 15,000 或国家/一级行政中心，非完整城镇、地址或 POI 数据库。gzip 3,473,691 字节（3.31 MiB），JSON 回退 7,952,531 字节（7.58 MiB）；未把索引加入主 JS 包。数据生成脚本、元数据及 GeoNames CC BY 4.0 署名随项目提供。新增 CitySearch 客户端/Worker、生成脚本与 public/search 产物，修改 App、CSS、README、ASSETS 及阶段记录。
 
 本阶段不调整地图地区选择、天地图/全球地图瓦片来源、瓦片加载、WGS84/LOD、相机架构或入场动画。本轮未运行构建、测试或浏览器验收；实施记录见 [docs/UI_SIMPLIFICATION_PLAN_3.md](./docs/UI_SIMPLIFICATION_PLAN_3.md)，待验证清单见 [docs/UI_SIMPLIFICATION_3_SOL_TESTS.md](./docs/UI_SIMPLIFICATION_3_SOL_TESTS.md)。
+
+## 18. Android 启动与窗口自适应（已实现并构建，部分设备验收待完成）
+
+2026-10-09 已完成深色原生地球启动画面、WebView 首帧交接、减少动画同步、边到边浅色系统图标与安全区，以及 Android 专用手机/宽屏/短窗口布局。修复横屏软键盘仅剩约 150 px 可用高度时搜索输入被裁切的问题；旋转、窗口缩放与普通后台恢复保持相机和搜索状态。
+
+API 36 debug APK 构建成功，130 项单元测试、9 组浏览器布局检查通过；现有 API 37 手机模拟器通过启动、键盘、横竖屏、恢复与全屏检查。API 36 真机、实体平板/折叠屏、三键导航和真实系统多窗口仍待实测，不将尺寸模拟视为设备验收。完整实施与交付见 [Android 16 适配计划](./docs/ANDROID16_ADAPTIVE_UI_PLAN.md)和[验证记录及待验清单](./docs/ANDROID16_VALIDATION.md)。

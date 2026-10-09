@@ -22,6 +22,7 @@ import {
 import { EarthRenderer, type LayerName, type RendererState } from '../earth/EarthRenderer';
 import { locations, formatCoordinate } from './locations';
 import { CitySearch, type CityResult } from './CitySearch';
+import { nativeLaunchFinished, prefersReducedMotion } from './NativeWindow';
 import type { MapMode } from '../layers/TileSources';
 import type { TileLayerState } from '../layers/ImageryTileLayer';
 import {
@@ -172,6 +173,10 @@ export class App {
 
   private async initialize() {
     this.setCameraReady(false);
+    // Let the lightweight shell commit before native splash exit; shader compilation
+    // and local texture decoding must not delay the first usable Android frame.
+    await nativeLaunchFinished;
+    if (this.disposed) return;
     try {
       this.earth = new EarthRenderer(this.$('#viewport'), this.$('#map-labels'), {
         onProgress: (progress) => {
@@ -183,9 +188,10 @@ export class App {
         onState: (state) => this.updateState(state),
       });
       await this.earth.initialize();
+      await nativeLaunchFinished;
       if (this.disposed) return;
       this.$('#loading').classList.add('loaded');
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) this.$('#loading').hidden = true;
+      if (prefersReducedMotion()) this.$('#loading').hidden = true;
       this.loadingTimer = setTimeout(() => {
         this.$('#loading').hidden = true;
       }, 250);

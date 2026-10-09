@@ -47,6 +47,8 @@ npm run serve
 
 ## 手机 App 发布
 
+2026-10-09 已完成 API 36 目标下的深色原生地球启动页、首帧衔接、系统安全区与窗口自适应，并生成 [debug APK](./android/app/build/outputs/apk/debug/app-debug.apk)。130 项单测、9 组浏览器布局检查及 API 37 手机模拟器交互检查通过；API 36 真机、实体平板/折叠屏仍待实测。构建校验值、实际范围和待验步骤见 [Android 适配交付记录](./docs/ANDROID16_VALIDATION.md)。
+
 已接入 Capacitor 8.5.2，Android 工程位于 `android/`。在安装 JDK 21、Android SDK 36 的 Windows 上运行：
 
 ```powershell

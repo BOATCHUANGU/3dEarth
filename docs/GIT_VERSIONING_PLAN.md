@@ -27,7 +27,7 @@
 ## 初始化与提交策略
 
 1. 在项目根目录初始化本地仓库，主分支命名为 `main`。（已完成）
-2. 以当前可复现状态创建首个基线提交，建议提交说明：`chore: establish Earth Observatory baseline`。（本轮建立）
+2. 以当前可复现状态创建首个基线提交，提交说明：`chore: establish Earth Observatory baseline`。（已完成，`3528449`）
 3. 主分支保持可构建；功能或修复通过短期工作分支完成，合并前运行对应测试和构建。
 4. 提交说明使用简单前缀，例如 `feat:`、`fix:`、`docs:`、`build:`、`test:`；一个提交聚焦一个可回滚的变化。
 5. 暂不创建远程仓库或推送。待确定 GitHub、GitLab 或私有托管位置，以及仓库公开/私有范围后再配置 `origin`。
@@ -51,3 +51,12 @@
 ## 本轮边界
 
 本轮只创建本地 Git 仓库与基线提交，并完善 `.gitignore`；没有创建远程仓库、推送或配置任何凭据。
+
+## 2026-10-09 后续归档：Android 启动与自适应
+
+- 基于 `main` 的 `3528449` 基线，归档 Astra 完成的深色启动页、原生首帧衔接、系统动态偏好、安全区、自适应布局、验证脚本及交付文档。
+- 提交说明为 `feat: improve Android launch and adaptive layout`；提交后可用 `git log -1 --format=fuller` 查询完整提交哈希。
+- 本次提交前重新运行 `npm test`（8 个文件、130 项通过）、`npx tsc --noEmit` 和 `npm run build`，均成功；构建仍有现有的 500 kB 分包提示。暂存内容通过 `git diff --cached --check`。
+- APK、Android 本机 SDK 路径、非示例环境文件、`dist/` 及 `artifacts/android16/` 保持忽略。Android 构建与设备结果沿用 [交付记录](./ANDROID16_VALIDATION.md)，本次未重新生成 APK 或运行设备验收。
+- 现有 debug APK 在源码提交前构建，未嵌入 Git 哈希；其 SHA-256 见交付记录。后续重新构建时应记录完整源码哈希、构建模式和 App 版本，不能把本次网页构建视为重新验证该 APK。
+- 当前没有远程地址，本次保存到本地 `main`；没有发行 tag。

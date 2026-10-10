@@ -1,6 +1,7 @@
 # Git 版本管理建立计划
 
-更新时间：2026-10-09  
+更新时间：2026-10-10
+
 状态：本地仓库已在 `main` 初始化；远程仓库尚未配置。
 
 ## 目标
@@ -60,3 +61,10 @@
 - APK、Android 本机 SDK 路径、非示例环境文件、`dist/` 及 `artifacts/android16/` 保持忽略。Android 构建与设备结果沿用 [交付记录](./ANDROID16_VALIDATION.md)，本次未重新生成 APK 或运行设备验收。
 - 现有 debug APK 在源码提交前构建，未嵌入 Git 哈希；其 SHA-256 见交付记录。后续重新构建时应记录完整源码哈希、构建模式和 App 版本，不能把本次网页构建视为重新验证该 APK。
 - 当前没有远程地址，本次保存到本地 `main`；没有发行 tag。
+
+## 2026-10-10 后续归档：Logo 统一与 GitHub 上传准备
+
+- 将 Web/Android Logo 实现、本地 Web/Android 构建记录及本轮文档维护作为一个本地提交保存在 `main`；提交说明和完整哈希可通过 `git log -1` 查看。
+- GitHub 远程仍未配置；本轮未创建仓库、未推送。继续前需要确定 GitHub 仓库 URL 和公开/私有可见性。本机 PATH 未找到 `gh` 命令。
+- 上传盘点：当前已跟踪文件中没有超过 100 MiB 的文件；文件名盘点只发现 `.env.example` 与 `.env.android.example` 两个空白示例模板，没有跟踪 `.env.local`、签名密钥、`local.properties` 或 APK。高置信度密钥格式扫描未发现匹配项。
+- `public/branding/earth-logo.png` 已作为约 0.52 MiB 的运行资源纳入仓库，Android 原生 PNG 副本同尺寸且 SHA-256 一致。APK、`node_modules/`、`dist/`、Android `build/` 输出和 `artifacts/` 中的 Logo 截图/构建日志仍由 `.gitignore` 排除。

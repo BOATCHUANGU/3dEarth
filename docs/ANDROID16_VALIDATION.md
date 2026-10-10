@@ -1,5 +1,7 @@
 # Android 自适应与启动交付记录
 
+> 历史记录：下文为 2026-10-09 的旧蓝色启动图版本。2026-10-10 已替换为用户选定的白灰 Logo，并重新构建覆盖同路径 APK；本轮 Android **未检验**。新产物、校验值及范围见 [Logo 实施记录](./EARTH_LOGO_ROLLOUT_PLAN.md)，以下旧 APK 校验值和设备结果不能用于新产物。
+
 日期：2026-10-09。实现基线为 compile/target SDK 36，最低 SDK 24。代码与 debug APK 已完成；API 36 真机、实体平板及折叠屏验收仍待执行。本文区分浏览器布局模拟与 Android 系统实测，不将窗口尺寸模拟视为对应设备认证。
 
 ## 已交付
@@ -15,7 +17,7 @@
 
 ## APK 与构建
 
-- [debug APK](../android/app/build/outputs/apk/debug/app-debug.apk)，42,577,106 字节，包名 `com.example.earthobservatory`。
+- 2026-10-09 旧 debug APK 为 42,577,106 字节，包名 `com.example.earthobservatory`。文件当时位于 `android/app/build/outputs/apk/debug/app-debug.apk`，被 Git 忽略，且已在 2026-10-10 被新版 Logo APK 覆盖，旧二进制不随仓库发布。
 - SHA-256：`BA93082F82B26E5D7E133BB9E5D7B086EAEFB42894C6721CF37B8309F7D5E78B`。
 - JDK 21.0.10，Android SDK 36；`npm run android:apk` 完成 TypeScript 检查、Vite Android 构建、Capacitor 同步与 Gradle assembleDebug。
 - 构建成功；现有 Vite 大包提示与 Gradle flatDir 提示不阻塞产物生成。这是调试安装包，尚未完成正式签名与发布。
@@ -44,9 +46,7 @@
 
 本机证据位于被 Git 忽略的 `artifacts/android16/`，不随源码提交：
 
-- [构建日志](../artifacts/android16/build.log)、[单测日志](../artifacts/android16/unit-tests.log)。
-- [布局结果](../artifacts/android16/layout-results.json)、[设备结果](../artifacts/android16/device-results.json)、[启动结果](../artifacts/android16/startup-results.json)、[全屏结果](../artifacts/android16/fullscreen-results.json)。
-- [原生启动](../artifacts/android16/startup-normal-750.png)、[首屏交接](../artifacts/android16/startup-normal-3000.png)、[手机页面](../artifacts/android16/device-phone-ready.png)、[横屏键盘](../artifacts/android16/device-landscape-search.png)。
+本机证据文件名包括 `build.log`、`unit-tests.log`、`layout-results.json`、`device-results.json`、`startup-results.json`、`fullscreen-results.json`、`startup-normal-750.png`、`startup-normal-3000.png`、`device-phone-ready.png` 和 `device-landscape-search.png`，均位于被 Git 忽略的 `artifacts/android16/`，不随 GitHub 仓库发布。
 
 在已配置 JDK 21、Android SDK 36 的环境执行：
 

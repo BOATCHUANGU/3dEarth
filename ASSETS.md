@@ -100,3 +100,9 @@ SHA-256：
 | `earth-clouds-2k.jpg` | `4ec1db1a19048b48a38c92c12ed6cdb146584225fdb807ab4dbab36bb0732408` |
 | `earth-specular.png` | `63ded7498b2fcf7d5c15bf010346dd2962f832db137189809ad5e86dae83d008` |
 | `earth-specular-2k.png` | `81df49058681de6e50bd17ee40f9910b5db65e4a5713758dd70b0c458f8e00ef` |
+
+## 品牌 Logo（2026-10-10）
+
+采用用户指定的第一版生成图 `exec-290c4db5-fc9d-40c6-a9c1-a1473214a270.png`。项目运行资源为 `public/branding/earth-logo.png`；Android 原生副本为 `android/app/src/main/res/drawable-nodpi/earth_brand_logo.png`。两者均为原图逐字节复制，1254×1254 RGBA，549,224 字节，无重绘、裁切、改色或透明度通道修改。UI 只用等比显示、整体 opacity 和 Android drawable 内缩控制呈现，不生成另一款图形。
+
+SHA-256：`10e04ad87e7caa48802bfa328fdb59fbda4ac09050fbf4a00b153ee5ed11745b`。生成器输出文件名为 `exec-290c4db5-fc9d-40c6-a9c1-a1473214a270.png`；仓库中随项目发布的原样副本是 [`public/branding/earth-logo.png`](./public/branding/earth-logo.png)。未跟踪的原始输出副本和检查截图位于被 Git 忽略的 `artifacts/branding/`，不作为仓库链接。透明通道检测和 Android 同步范围见 [Logo 实施记录](./docs/EARTH_LOGO_ROLLOUT_PLAN.md)。

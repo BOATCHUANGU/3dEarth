@@ -47,7 +47,9 @@ npm run serve
 
 ## 手机 App 发布
 
-2026-10-09 已完成 API 36 目标下的深色原生地球启动页、首帧衔接、系统安全区与窗口自适应，并生成 [debug APK](./android/app/build/outputs/apk/debug/app-debug.apk)。130 项单测、9 组浏览器布局检查及 API 37 手机模拟器交互检查通过；API 36 真机、实体平板/折叠屏仍待实测。构建校验值、实际范围和待验步骤见 [Android 适配交付记录](./docs/ANDROID16_VALIDATION.md)。
+2026-10-10 已统一选定的第一版白灰地球 Logo：Web 左上角与加载区、Android 原生启动图及 WebView 共用同一原图。Web 四组实际浏览器检查通过，Android 已同步并重新生成 debug APK，**本轮未进行 Android 端检验**。最新产物校验值、截图及范围见 [Logo 实施记录](./docs/EARTH_LOGO_ROLLOUT_PLAN.md)；此前设备结果仅代表旧版本。
+
+2026-10-09 已完成 API 36 目标下的深色原生地球启动页、首帧衔接、系统安全区与窗口自适应，并生成 debug APK。APK 是本机生成且被 Git 忽略的文件，当前路径为 `android/app/build/outputs/apk/debug/app-debug.apk`；按下方命令可重新构建。130 项单测、9 组浏览器布局检查及 API 37 手机模拟器交互检查通过；API 36 真机、实体平板/折叠屏仍待实测。构建校验值、实际范围和待验步骤见 [Android 适配交付记录](./docs/ANDROID16_VALIDATION.md)。
 
 已接入 Capacitor 8.5.2，Android 工程位于 `android/`。在安装 JDK 21、Android SDK 36 的 Windows 上运行：
 
@@ -70,7 +72,7 @@ npm run android:apk
 | 图层设置 → 地图样式 | 选择自动 / 卫星 / 街道：按地区与高度选源、保留摄影图层，或始终显示街道图 |
 | 搜索或 `/` | 搜索全球常见城市的中文、英文或已收录别名，或输入 `31.23, 121.47` |
 | 居中暂停/播放图标 | 暂停或继续自转；近地时暂缓旋转以便观察 |
-| 重置按钮或左上角 EARTH | 返回初始视角 |
+| 重置按钮或左上角地球 Logo | 返回初始视角 |
 | 图层面板 | 切换云层、大气、灯火、标记与经纬网，查看极致画质 |
 | 太阳面板 | 调整模拟 UTC 时刻，或启用实时太阳位置 |
 | 全屏按钮 | 在浏览器支持时切换全屏 |

@@ -147,9 +147,6 @@
     width: calc(100% - 24px);
     right: 12px;
   }
-  .native-android .brand small {
-    display: none;
-  }
 }
 /* A short application viewport includes landscape, split-screen and an open IME. */
 @container (max-height: 420px) {

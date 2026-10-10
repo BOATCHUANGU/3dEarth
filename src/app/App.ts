@@ -83,7 +83,7 @@ export class App {
   private render() {
     this.root.innerHTML = `
       <header class="topbar">
-        <button class="brand" id="home" aria-label="EARTH 返回初始视角">${icon('globe')}<span>EARTH<small>THE LIVING PLANET</small></span></button>
+        <button class="brand" id="home" aria-label="EARTH 返回初始视角"><img class="brand-logo" src="${import.meta.env.BASE_URL}branding/earth-logo.png" width="56" height="56" alt="" draggable="false" fetchpriority="high"></button>
         <nav class="main-nav" aria-label="主导航"><span class="nav-active"><span class="live-dot"></span>探索地球</span><button data-about>星球档案 ${icon('arrow-up-right')}</button></nav>
         <button class="search-trigger" id="open-search">${icon('search')}<span>寻找一个地方</span><kbd>/</kbd></button>
       </header>
@@ -154,7 +154,7 @@ export class App {
           <div class="altitude-readout"><span>观测高度</span><b id="altitude">12,760</b><small id="altitude-unit">km</small></div>
         </div>
 
-        <div class="loading-overlay" id="loading" role="status"><div class="loading-orbit"><span></span></div><p id="loading-text">正在靠近这颗蓝色星球</p><div class="loading-track"><span id="loading-progress"></span></div><small>LOADING OUR WORLD</small></div>
+        <div class="loading-overlay" id="loading" role="status"><img class="loading-logo" src="${import.meta.env.BASE_URL}branding/earth-logo.png" width="112" height="112" alt="" draggable="false"><p id="loading-text" class="visually-hidden">正在加载地球</p><div class="loading-track"><span id="loading-progress"></span></div></div>
         <div class="error-overlay" id="error" role="alert" hidden>${icon('globe')}<h2>暂时无法看见地球</h2><p id="error-message"></p><button id="retry">重新载入 ${icon('arrow-right')}</button></div>
       </main>
 

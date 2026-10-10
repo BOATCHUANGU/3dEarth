@@ -1,12 +1,14 @@
 # Android 16 手机与平板适配计划
 
+> 2026-10-10 品牌更新：原生蓝色旋转图已换成选定白灰 PNG，保留退出淡出；共用 WebView 同步新 Logo。已重新构建 APK，本次未进行 Android 端检验。[新构建与 Web 检验记录](./EARTH_LOGO_ROLLOUT_PLAN.md)取代下文旧 APK 校验值；下文设备结果仅属于 2026-10-09 版本。
+
 ## 完成记录（2026-10-09）
 
 **代码实现与 debug APK 已完成；API 36 真机及真实平板/折叠屏验收待执行。** 下文保留原计划与实施前现状，当前交付以本节和[验证记录](./ANDROID16_VALIDATION.md)为准。
 
 - 已实现深色原生地球启动图与轻微旋转、WebView 首帧交接、系统减少动画同步、浅色系统图标与边到边安全区。
 - 已实现 Android 专用窗口自适应：48 px 触控按钮、手机横竖屏、宽屏/短窗口布局、弹层滚动及横屏键盘避让；旋转与窗口变化保留现有相机和搜索状态。
-- `npm run android:apk` 构建成功；[安装包](../android/app/build/outputs/apk/debug/app-debug.apk)为 42,577,106 字节。SHA-256：`BA93082F82B26E5D7E133BB9E5D7B086EAEFB42894C6721CF37B8309F7D5E78B`。
+- `npm run android:apk` 构建成功；当时生成的 APK 为 42,577,106 字节。APK 路径 `android/app/build/outputs/apk/debug/app-debug.apk` 被 Git 忽略，且已于 2026-10-10 被新版 Logo APK 覆盖，旧二进制不随仓库发布。旧 APK SHA-256：`BA93082F82B26E5D7E133BB9E5D7B086EAEFB42894C6721CF37B8309F7D5E78B`。
 - 130 项单元测试和 9 组 Edge 布局检查通过；在现有 API 37 手机模拟器完成冷启动、减少动画、横竖屏、软键盘、后台恢复与全屏检查。API 37 结果不能替代 API 36 验收。
 - 未实测场景、复现命令、变更文件和本地证据详见[交付与待验清单](./ANDROID16_VALIDATION.md)。本轮未改变地图来源、瓦片算法或清晰度策略。
 

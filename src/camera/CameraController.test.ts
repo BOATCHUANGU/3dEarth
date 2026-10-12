@@ -43,6 +43,55 @@ afterEach(() => {
 });
 
 describe('city altitude camera', () => {
+  it('reports arrival only after travel and cancellation on replacement or interruption', () => {
+    const { controller, surface } = setup();
+    const events: string[] = [];
+    controller.onFlightState = (state) => events.push(state);
+    controller.focusOn(40, 20, 250_000, 4);
+    advance(controller, 3);
+    expect(events).toEqual(['started']);
+    controller.focusOn(10, 30, 250_000, 1);
+    expect(events).toEqual(['started', 'cancelled', 'started']);
+    advance(controller, 1.1);
+    expect(events.at(-1)).toBe('arrived');
+    controller.focusOn(20, 40, 250_000, 2);
+    input(surface, 'pointerdown', {
+      pointerType: 'mouse',
+      pointerId: 1,
+      button: 0,
+      clientX: 300,
+      clientY: 300,
+    });
+    expect(events.at(-1)).toBe('cancelled');
+    expect(controller.isFlying).toBe(false);
+  });
+
+  it('reports instantaneous arrival and releases callbacks on disposal', () => {
+    const { controller } = setup();
+    const events: string[] = [];
+    controller.onFlightState = (state) => events.push(state);
+    controller.focusOn(0, 0, 250_000, 0);
+    expect(events).toEqual(['started', 'arrived']);
+    controller.focusOn(20, 20, 250_000, 4);
+    controller.dispose();
+    expect(events.at(-1)).toBe('cancelled');
+    expect(controller.onFlightState).toBeUndefined();
+    controllers.splice(controllers.indexOf(controller), 1);
+  });
+
+  it('rotates about 0.36 degrees per second at full spin while retaining near-ground pause', () => {
+    const { controller } = setup();
+    controller.setAutoRotate(true);
+    advance(controller, 2);
+    const before = controller.centerCoordinates.longitude;
+    advance(controller, 10);
+    expect(Math.abs(controller.centerCoordinates.longitude - before)).toBeCloseTo(3.6, 1);
+    controller.focusOn(0, 0, 150, 0);
+    advance(controller, 2);
+    const near = controller.centerCoordinates.longitude;
+    advance(controller, 10);
+    expect(controller.centerCoordinates.longitude).toBeCloseTo(near, 7);
+  });
   it.each([0, 31.2304, 80, -89.99])('can focus at 150 m at latitude %s', (latitude) => {
     const { camera, controller } = setup();
     controller.focusOn(latitude, 121.4737, 150, 0);

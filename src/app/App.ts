@@ -119,7 +119,6 @@ export class App {
               ['clouds', '流动云层', '大气中的轻盈纹理'],
               ['atmosphere', '大气辉光', '地平线上的一抹蓝'],
               ['night', '城市灯火', '入夜后的人间星河'],
-              ['markers', '地点标记', '每一次相遇的坐标'],
               ['grid', '经纬网格', '看见地理的秩序'],
             ] as const
           )
@@ -184,7 +183,6 @@ export class App {
         },
         onWarning: (message) => this.toast(message),
         onError: (message) => this.showError(message),
-        onSelect: (id) => this.selectLocation(id),
         onState: (state) => this.updateState(state),
       });
       await this.earth.initialize();
@@ -385,8 +383,7 @@ export class App {
   private selectLocation(id: string) {
     const location = locations.find((location) => location.id === id);
     if (!location || !this.ready) return;
-    this.earth?.selectLocation(id);
-    this.earth?.controls.focusOn(location.latitude, location.longitude, 250_000, 2.6);
+    this.earth?.focusLocation(location.name, location.latitude, location.longitude, 250_000, 2.6);
     this.closePanels();
   }
 
@@ -400,13 +397,16 @@ export class App {
     )
       throw new RangeError('纬度须在 -90 至 90，经度须在 -180 至 180 之间。');
     if (!this.ready) return;
-    this.earth?.selectLocation('custom');
-    this.earth?.controls.focusOn(latitude, longitude, altitude);
+    this.earth?.focusLocation(
+      `${formatCoordinate(latitude)} · ${formatCoordinate(longitude, false)}`,
+      latitude,
+      longitude,
+      altitude,
+    );
   }
 
   private reset() {
     if (!this.ready) return;
-    this.earth?.selectLocation(locations[0].id);
     this.earth?.controls.reset();
     this.closePanels();
   }
@@ -640,8 +640,13 @@ export class App {
 
   private selectCity(city: CityResult) {
     if (!this.ready) return;
-    this.earth?.selectLocation(`geonames-${city.id}`);
-    this.earth?.controls.focusOn(city.latitude, city.longitude, 250_000, 2.6);
+    this.earth?.focusLocation(
+      city.matchedName || city.name,
+      city.latitude,
+      city.longitude,
+      250_000,
+      2.6,
+    );
     this.closePanels();
   }
 

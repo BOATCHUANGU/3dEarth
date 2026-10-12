@@ -36,6 +36,7 @@ function interpolateAltitude(start: number, end: number, progress: number): numb
 export class CameraController {
   /** Fired by orbiting, zooming, and each animation step that changes the view. */
   onChange?: () => void;
+  onFlightState?: (state: 'started' | 'arrived' | 'cancelled') => void;
 
   private readonly controls: OrbitControls;
   private readonly initialPosition: Vector3;
@@ -174,6 +175,7 @@ export class CameraController {
     if (progress === 1) {
       this.flight = null;
       this.refreshView();
+      this.onFlightState?.('arrived');
     }
   }
 
@@ -216,7 +218,8 @@ export class CameraController {
   }
 
   dispose(): void {
-    this.flight = null;
+    this.cancelFlight();
+    this.onFlightState = undefined;
     this.touchPointers.clear();
     this.controls.removeEventListener('start', this.handleInteraction);
     this.controls.removeEventListener('change', this.handleChange);
@@ -230,6 +233,8 @@ export class CameraController {
   }
 
   private startFlight(destination: Vector3, duration: number, allowLift = true): void {
+    this.cancelFlight();
+    this.onFlightState?.('started');
     // Consume residual orbit momentum once so it cannot pull against the flight.
     this.controls.autoRotate = false;
     this.controls.enableDamping = false;
@@ -250,6 +255,7 @@ export class CameraController {
       this.controls.update(0);
       this.refreshView();
       this.notifyChange();
+      this.onFlightState?.('arrived');
       return;
     }
 
@@ -294,7 +300,7 @@ export class CameraController {
     ).length();
     this.controls.rotateSpeed = Math.min(0.42, (altitude / WGS84.a) * 0.22);
     const spin = Math.max(0, Math.min(1, (altitude - 80_000) / 2_500_000));
-    this.controls.autoRotateSpeed = 0.12 * spin * spin;
+    this.controls.autoRotateSpeed = 0.06 * spin * spin;
     this.controls.autoRotate = this.rotating && !this.flight && spin > 0;
 
     const near = Math.max(0.1 / WGS84.a, Math.min(0.03, (altitude / WGS84.a) * 0.08));
@@ -315,8 +321,14 @@ export class CameraController {
     }
   }
 
-  private readonly handleInteraction = (): void => {
+  private cancelFlight(): void {
+    if (!this.flight) return;
     this.flight = null;
+    this.onFlightState?.('cancelled');
+  }
+
+  private readonly handleInteraction = (): void => {
+    this.cancelFlight();
     this.orbitAltitude = clampAltitude(this.altitudeMeters);
     this.refreshView();
   };
@@ -355,7 +367,7 @@ export class CameraController {
     pointer.set(event.clientX, event.clientY);
     const distance = this.getPinchDistance();
     if (distance > 4 && this.pinchDistance > 4) {
-      this.flight = null;
+      this.cancelFlight();
       const coordinate = this.centerCoordinates;
       this.orbitAltitude = clampAltitude(coordinate.altitude * (this.pinchDistance / distance));
       this.camera.position.copy(

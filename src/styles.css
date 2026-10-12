@@ -538,79 +538,23 @@ button[aria-expanded='true'] {
   font-size: 8px;
   letter-spacing: 0.4px;
 }
-.map-marker {
+.search-place-label {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 0;
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: none;
-  white-space: nowrap;
-  transition: opacity 0.3s;
-  min-height: 26px;
-}
-.marker-dot {
-  display: block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #dce7e8;
-  box-shadow:
-    0 0 8px #000,
-    0 0 0 3px #131e2970;
-}
-.marker-name {
-  font-size: 9px;
-  color: #d4dce4;
-  letter-spacing: 2px;
-  text-shadow:
-    0 1px 5px #000,
-    0 1px 8px #000;
-  padding: 5px 7px 5px 0;
-  opacity: 0.7;
-}
-.marker-name small {
-  display: none;
-  font-size: 6px;
-  letter-spacing: 1.5px;
-  margin-top: 3px;
-  color: #bacddc;
-}
-.map-marker.selected {
-  gap: 13px;
-}
-.map-marker.selected .marker-dot {
-  width: 6px;
-  height: 6px;
-  background: #e0eff7;
-  box-shadow:
-    0 0 12px #c6eaff70,
-    0 0 0 5px #abcadd24,
-    0 0 0 6px #bcd9ed45;
-}
-.map-marker.selected .marker-name {
-  font-size: 12px;
-  opacity: 1;
-}
-.map-marker.selected .marker-name small {
-  display: block;
-}
-.map-marker:hover .marker-name {
-  opacity: 1;
-}
-.map-marker.selected:before {
-  content: '';
-  height: 27px;
-  width: 27px;
-  position: absolute;
-  left: -10.5px;
-  top: calc(50% - 13.5px);
-  border: 1px solid #cce2f340;
-  border-radius: 50%;
   pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #e5ecf1;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-shadow:
+    0 1px 5px #080d14,
+    0 1px 12px #080d14;
 }
 .floating-panel {
   position: absolute;
@@ -1450,22 +1394,6 @@ dialog::backdrop {
   }
   .about-signature {
     font-size: 5px;
-  }
-  .map-marker.selected .marker-name {
-    font-size: 9px;
-  }
-  .marker-name {
-    font-size: 7px;
-    letter-spacing: 1px;
-  }
-  .marker-name small {
-    font-size: 5px;
-  }
-  .map-marker {
-    gap: 7px;
-  }
-  .map-marker.selected {
-    gap: 10px;
   }
 }
 @media (max-height: 680px) and (min-width: 901px) {

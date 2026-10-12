@@ -129,7 +129,6 @@ async function createPage(options) {
   await page.goto(baseURL, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => window.earth?.getState().ready, null, { timeout: 45_000 });
   await page.locator('#loading').waitFor({ state: 'hidden' });
-  await page.evaluate(() => window.earth.setLayer('markers', false));
 }
 
 try {

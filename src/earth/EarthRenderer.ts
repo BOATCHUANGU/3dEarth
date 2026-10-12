@@ -37,13 +37,13 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { EarthOutputPass } from './EarthOutputPass';
 import { CameraController } from '../camera/CameraController';
 import { geodeticToWorld, WGS84 } from '../geo/CoordinateSystem';
-import { MarkerLayer } from '../layers/MarkerLayer';
+import { SearchLabelLayer } from '../layers/SearchLabelLayer';
 import { createCloudMaterial, createEarthMaterial, earthVertex } from './EarthMaterial';
 import { SunLightController } from './SunLightController';
 import { ImageryTileLayer, type TileLayerState } from '../layers/ImageryTileLayer';
 import type { MapMode } from '../layers/TileSources';
 
-export type LayerName = 'clouds' | 'atmosphere' | 'night' | 'markers' | 'grid';
+export type LayerName = 'clouds' | 'atmosphere' | 'night' | 'grid';
 export interface RendererState {
   fps: number;
   altitude: number;
@@ -57,7 +57,6 @@ export interface RendererOptions {
   onProgress: (progress: number) => void;
   onWarning: (message: string) => void;
   onState: (state: RendererState) => void;
-  onSelect: (id: string) => void;
   onError: (message: string) => void;
 }
 
@@ -68,13 +67,12 @@ export class EarthRenderer {
   // All lit materials share this vector; canonical solar coordinates stay untouched.
   private readonly effectiveSunDirection = this.sun.direction.clone();
   readonly scene = new Scene();
-  readonly markers: MarkerLayer;
+  private readonly searchLabel: SearchLabelLayer;
   readonly renderer: WebGLRenderer;
   readonly layers: Record<LayerName, boolean> = {
     clouds: true,
     atmosphere: true,
     night: true,
-    markers: true,
     grid: false,
   };
   private composer: EffectComposer;
@@ -104,6 +102,7 @@ export class EarthRenderer {
   private tiles?: ImageryTileLayer;
   private onVisibility = () => {
     if (document.hidden) {
+      this.searchLabel.hide();
       this.entrance?.pause();
       cancelAnimationFrame(this.frame);
       this.clock.stop();
@@ -115,6 +114,7 @@ export class EarthRenderer {
   };
   private onContextLost = (event: Event) => {
     event.preventDefault();
+    this.searchLabel.clear();
     this.contextLost = true;
     this.running = false;
     this.cancelEntrance();
@@ -151,9 +151,11 @@ export class EarthRenderer {
     container.prepend(this.renderer.domElement);
     this.controls = new CameraController(this.camera, this.renderer.domElement);
     this.controls.setSuspended(true);
-    this.markers = new MarkerLayer(labelContainer, options.onSelect);
-    this.markers.visible = false;
-    this.markers.update(this.camera, this.width, this.height);
+    this.searchLabel = new SearchLabelLayer(labelContainer);
+    this.controls.onFlightState = (state) => {
+      if (state === 'arrived') this.searchLabel.arrive();
+      else this.searchLabel.clear();
+    };
     this.globe.visible = false;
     this.scene.add(this.globe);
     const hdr = this.renderer.extensions.has('EXT_color_buffer_float');
@@ -347,8 +349,6 @@ export class EarthRenderer {
     this.entrance = undefined;
     this.resetEntrancePose();
     this.entranceFinished = true;
-    this.markers.visible = this.layers.markers;
-    this.markers.update(this.camera, this.width, this.height);
     this.controls.setSuspended(false);
     if (prefersReducedMotion()) this.controls.setAutoRotate(false);
     const complete = this.onEntranceComplete;
@@ -378,8 +378,15 @@ export class EarthRenderer {
     this.effectiveSunDirection.copy(this.sun.direction).applyQuaternion(this.globe.quaternion);
   }
 
-  selectLocation(id: string) {
-    this.markers.selected = id;
+  focusLocation(
+    name: string,
+    latitude: number,
+    longitude: number,
+    altitude: number,
+    duration = 1.8,
+  ) {
+    this.controls.focusOn(latitude, longitude, altitude, duration);
+    this.searchLabel.show(name, latitude, longitude, this.controls.isFlying);
   }
 
   setMapMode(mode: MapMode) {
@@ -399,7 +406,6 @@ export class EarthRenderer {
     if (name === 'night' && this.surface)
       this.surface.material.uniforms.nightEnabled.value = +visible;
     if (name === 'night') this.tiles?.setNight(visible);
-    if (name === 'markers') this.markers.visible = visible && this.entranceFinished;
     if (name === 'grid') this.grid.visible = visible;
   }
 
@@ -510,7 +516,7 @@ export class EarthRenderer {
       this.clouds.rotation.y += delta * 0.0006;
     this.syncSunDirection();
     this.composer.render(delta);
-    if (this.entranceFinished) this.markers.update(this.camera, this.width, this.height);
+    if (this.entranceFinished) this.searchLabel.update(this.camera, this.width, this.height);
     this.elapsed += rawDelta;
     this.frameCount++;
     if (this.elapsed >= 0.5) {
@@ -540,7 +546,7 @@ export class EarthRenderer {
     window.removeEventListener('earth-motion-change', this.onMotionPreference);
     this.renderer.domElement.removeEventListener('webglcontextlost', this.onContextLost);
     this.controls.dispose();
-    this.markers.dispose();
+    this.searchLabel.dispose();
     this.tiles?.dispose();
     const geometries = new Set<BufferGeometry>();
     const materials = new Set<{ dispose(): void }>();

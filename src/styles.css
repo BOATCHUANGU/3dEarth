@@ -795,13 +795,50 @@ input[type='range'] {
     transition: none;
   }
 }
+.loading-mark {
+  position: relative;
+  display: block;
+  width: 112px;
+  height: 112px;
+  margin-bottom: 18px;
+}
+.loading-mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  mask: var(--loading-logo) center / contain no-repeat;
+  background: linear-gradient(90deg, transparent 40%, #fff 50%, transparent 60%);
+  background-size: 300% 100%;
+  animation: loading-shimmer 2s linear infinite;
+}
+@keyframes loading-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
+}
 .loading-logo {
   display: block;
   width: 112px;
   height: 112px;
   object-fit: contain;
+  opacity: 0.55;
+}
+.loading-mark.is-motion-reduced::after {
+  display: none;
+}
+.loading-mark.is-motion-reduced .loading-logo {
   opacity: 0.9;
-  margin-bottom: 18px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loading-mark::after {
+    display: none;
+  }
+  .loading-logo {
+    opacity: 0.9;
+  }
 }
 @media (max-height: 500px) {
   /* Keep the launch mark visible even when the existing page is taller than the window. */

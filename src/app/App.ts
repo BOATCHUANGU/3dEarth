@@ -153,7 +153,7 @@ export class App {
           <div class="altitude-readout"><span>观测高度</span><b id="altitude">12,760</b><small id="altitude-unit">km</small></div>
         </div>
 
-        <div class="loading-overlay" id="loading" role="status"><span class="loading-mark ${prefersReducedMotion() ? 'is-motion-reduced' : ''}" style="--loading-logo: url('${import.meta.env.BASE_URL}branding/earth-logo.png')" aria-hidden="true"><img class="loading-logo" src="${import.meta.env.BASE_URL}branding/earth-logo.png" width="112" height="112" alt="" draggable="false"></span><p id="loading-text" class="visually-hidden">正在加载地球</p><div class="loading-track"><span id="loading-progress"></span></div></div>
+        <div class="loading-overlay" id="loading" role="status"><div class="loading-orbit ${prefersReducedMotion() ? 'is-motion-reduced' : ''}" aria-hidden="true"><span></span></div><p id="loading-text" class="visually-hidden">正在加载地球</p><div class="loading-track"><span id="loading-progress"></span></div></div>
         <div class="error-overlay" id="error" role="alert" hidden>${icon('globe')}<h2>暂时无法看见地球</h2><p id="error-message"></p><button id="retry">重新载入 ${icon('arrow-right')}</button></div>
       </main>
 

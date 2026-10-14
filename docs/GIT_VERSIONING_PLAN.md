@@ -2,7 +2,7 @@
 
 更新时间：2026-10-14
 
-状态：`main` 已配置 `origin` 并跟踪公开仓库 `BOATCHUANGU/3dEarth`。搜索曲面文字、许可、实现记录和协作文档已通过 `bb60f93` 推送；Android APK 构建信息现归档于 App 发布计划。APK 不跟踪进源码历史。
+状态：`main` 已配置 `origin` 并跟踪公开仓库 `BOATCHUANGU/3dEarth`。本次大标题实现与文档正在提交；对应的 Android debug APK 已离线重建、校验，APK 本体仍由 `.gitignore` 排除，计划附加到独立 GitHub 预览版。历史 APK 与最新产物的校验值和限制见 `APP_RELEASE_PLAN.md`。
 
 ## 目标
 
@@ -15,7 +15,7 @@
 - 项目声明使用 Vite `^7.3.1`；`package-lock.json` 锁定依赖解析结果。
 - 网页与 App 共用同一套 Vite、TypeScript、Three.js 源码。`build:android` 使用 `vite build --mode android`，`android:sync` 将该模式生成的 `dist/` 同步进 Capacitor Android 工程。
 - 网页和 App 使用同一前端代码，但 API 地址在构建时注入；网站可以使用同源服务，APK 必须配置正式 HTTPS API。Vite 支持按 mode 加载 `.env.[mode]` 配置，`VITE_` 变量会进入客户端包，不能存放秘密。
-- 当前工作目录已初始化本地 `.git`，主分支为 `main`，远程为 `https://github.com/BOATCHUANGU/3dEarth.git`。APK 构建输出与同步生成文件继续由 `.gitignore` 排除；2026-10-14 debug APK 的源码提交、大小和 SHA-256 见 `APP_RELEASE_PLAN.md`。
+- 当前工作目录已初始化本地 `.git`，主分支为 `main`，远程为 `https://github.com/BOATCHUANGU/3dEarth.git`。APK 构建输出与同步生成文件继续由 `.gitignore` 排除；2026-10-14 28px Cinzel 基线与大标题 debug APK 的版本、校验值和发布状态见 `APP_RELEASE_PLAN.md`。
 - `.gitignore` 忽略 `node_modules/`、`dist/`、所有非示例环境文件、签名文件、Android SDK 本机路径、Gradle 缓存/构建输出及 APK/AAB。项目文档引用的中国网络验证报告和三张阶段截图保留在版本管理中，其余生成型 artifacts 忽略。
 
 下方 2026-10-09 与 2026-10-10 小节是对应日期的仓库快照；其中“未配置远程/未推送”描述的是当时状态，不适用于现有 `origin`。

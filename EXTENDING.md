@@ -94,11 +94,11 @@ Vite 的 `VITE_` 变量会公开进入客户端。`VITE_ARCGIS_API_KEY` 和纯�
 
 ## 搜索地点名称
 
-城市与坐标搜索都经 `EarthRenderer.focusLocation` 开始相机飞行并设置名称；`CameraController.onFlightState` 携带 travel/zoom 类型报告飞行开始、到达或取消。当前 `SearchLabelLayer` 在 Three.js 场景中维护一条 Troika SDF 网格；`SearchSurfaceText` 只在字体 shaping 完成时进行一次布局，按中文字形和 Latin 字母分别加字距、拟合安全宽度，并将字形顶点映射到 WGS84 椭球曲面。名称固定于搜索坐标的东/北方向，不随镜头反向缩放。渲染更新负责真实飞行显露、投影尺寸渐隐、地表明暗选墨和地球遮挡，不逐帧排版、不读回 GPU 像素、不接收点击或拖动。
+城市与坐标搜索都经 `EarthRenderer.focusLocation` 开始相机飞行并设置名称；`CameraController.onFlightState` 携带 travel/zoom 类型报告飞行开始、到达或取消。`SearchLabelLayer` 在 Three.js 场景中维护一条 Troika SDF 网格；`SearchSurfaceText` 只在字体 shaping 完成时进行一次布局，按中文字形、Latin 字母与无空格跨脚本边界分别加字距，再一次性 fit 到安全宽度，并将字形顶点映射到 WGS84 椭球曲面。名称固定于搜索坐标的东/北方向，不随镜头反向缩放。`SearchTitleSizing` 按 CSS 视口和可见字形测量定标；桌面短名称目标约为视口宽 22%，长名称与手机有独立宽度上限。渲染更新负责真实飞行显露、fit 后渐隐、地表明暗选墨和地球遮挡，不逐帧排版、不读回 GPU 像素、不接收点击或拖动。
 
-本地字体为 Cinzel Medium 500 与 Source Han Serif SC Medium 500；加载失败时不请求 CDN，并保留安全失败状态。中文字距 0.08em、Latin 字母 0.10em、混排边界 0.09em；真实空格、标点和数字不额外加宽。名称先收紧字距，再一次性缩小以适应工具栏安全宽度。到达后保留 3 秒并淡出 0.5 秒；后续地点飞行、交互取消、重置、页面后台过期、上下文中断和销毁会清理旧对象。减少动态偏好下省略动效。地点数据仍供搜索使用，不再通过 `MarkerLayer` 创建常驻地图按钮，也没有 `markers` 图层开关。
+本地字体为 Cinzel Medium 500 与 Source Han Serif SC Medium 500；加载失败时不请求 CDN，并保留安全失败状态。主色为浅香槟金 `#F2DEAE`，亮影像或街道由缓存亮度提示选择深古铜 `#644A2B`；复用 8×8 缓存采样、3×3 邻域和 0.27/0.19 滞回。中文字距 0.08em、Latin 字母 0.10em、无空格跨脚本边界 0.09em；真实空格、标点和数字不额外加宽。名称先收紧字距，再一次性等比缩小以适应工具栏安全宽度。到达后保留 3 秒并淡出 0.5 秒；缩放至 fit 后字号 1.5–3 倍渐隐，接近屏幕边缘或工具栏时平滑淡出。后续地点飞行、交互取消、重置、页面后台过期、上下文中断和销毁会清理旧对象。减少动态偏好下省略动效。地点数据仍供搜索使用，不再通过 `MarkerLayer` 创建常驻地图按钮，也没有 `markers` 图层开关。
 
-旧版 DOM 投影方案记录在 `SEARCH_LABEL_FLIGHT_PLAN.md`，Atlas 字体方案记录在 `SEARCH_LABEL_ATLAS_PLAN.md`；二者是演进历史。当前字号、字体和渐隐参数以 [Cinzel 交付记录](./docs/SEARCH_LABEL_CINZEL_PLAN.md)为准。
+旧版 DOM 投影方案记录在 `SEARCH_LABEL_FLIGHT_PLAN.md`，Atlas、Source Serif 4 与 28px Cinzel 字号方案分别记录在 `SEARCH_LABEL_ATLAS_PLAN.md`、`SEARCH_LABEL_CINZEL_PLAN.md`；它们均为演进历史。当前字号、颜色、fit 和渐隐规则以 [大标题交付记录](./docs/SEARCH_LABEL_GRAND_TITLE_PLAN.md)为准。验证通过 165 项单测、Web 构建、44 组浏览器前后样本、桌面/手机/减少动态生命周期与生产首搜；Android 共用资源已同步，但本轮未打 APK 或验收设备。
 
 ## 验证入口
 

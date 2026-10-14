@@ -2,7 +2,7 @@
 
 日期：2026-10-12。状态：已实施；Web 构建、测试与四组浏览器检查通过，Android 已同步并构建，未做 Android 端检验。维护文档已更新并与本轮改动一起提交至本地 `main`；未推送。
 
-> 历史记录：此方案描述的是 2026-10-12 DOM 投影版本，后续已升级至 WGS84 Troika 曲面文字；当前状态见 [Cinzel 交付记录](./SEARCH_LABEL_CINZEL_PLAN.md)。
+> 历史记录：此方案描述的是 2026-10-12 DOM 投影版本，后续已升级至 WGS84 Troika 曲面文字；Cinzel 28px 阶段及当前大标题/浅香槟金参数分别见 [Cinzel 交付记录](./SEARCH_LABEL_CINZEL_PLAN.md) 和[大标题交付记录](./SEARCH_LABEL_GRAND_TITLE_PLAN.md)。
 
 ## 完成记录
 

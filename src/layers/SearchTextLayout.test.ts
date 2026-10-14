@@ -46,3 +46,15 @@ it('moves a ligature or combining glyph by its shaping character ID, not its gly
   const result = trackSearchText('ABC', info, 1, 28, 2000);
   expect(result.glyphBounds[4] - info.glyphBounds[4]).toBeCloseTo(0.1);
 });
+it('keeps SDF padding in render bounds but excludes it from projected ink bounds', () => {
+  // A 1x2 path in a 128px SDF has a 0.1328125 margin on each side.
+  const info = {
+    glyphBounds: new Float32Array([-0.6328125, -1.1328125, 0.6328125, 1.1328125]),
+    glyphColors: new Uint8Array([0, 0, 1]),
+    blockBounds: [-0.5, -1, 0.5, 1] as [number, number, number, number],
+    sdfGlyphSize: 128,
+  };
+  const result = trackSearchText('A', info, 1, 28, 2000);
+  expect(result.visibleBounds).toEqual([-0.5, -1, 0.5, 1]);
+  expect(result.chunkedBounds[0].rect).toEqual(Array.from(info.glyphBounds));
+});

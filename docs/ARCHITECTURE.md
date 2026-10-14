@@ -22,7 +22,7 @@
 1. 地理坐标统一为 WGS84：经纬度为度、椭球高为米；世界坐标为 `(ECEF.x, ECEF.z, -ECEF.y) / 6378137`。投影、法线和贴地计算复用 `geo`，不私建球半径或混用海拔基准。
 2. 在线瓦片使用 Web Mercator XYZ，极区保留全球底图；瓦片顶点相对局部中心存储。现有局部精度方案不能被描述为完整场景原点迁移。
 3. 飞行进度和到达以 CameraController 的实际状态为准。文字等待、显隐与取消不得用独立定时器猜测到达；字体异步结果不能覆盖后续搜索。
-4. 最新地表文字为 Troika SDF 单网格，采用本地 Cinzel Medium 500 + Source Han Serif SC Medium 500；按 WGS84 地理锚点及东/北方向贴合椭球曲面。脚本字距、一次性安全宽度拟合、墨色适配和 fit 后的放大渐隐以 `SEARCH_LABEL_CINZEL_PLAN.md` 为当前交付基线。Atlas、Source Serif 4 和 DOM 投影均为历史阶段，不代表当前字体或布局。
+4. 最新地表文字为 Troika SDF 单网格，采用本地 Cinzel Medium 500 + Source Han Serif SC Medium 500；按 WGS84 地理锚点及东/北方向贴合椭球曲面。`SearchTitleSizing` 以桌面短名称可见轮廓宽约占视口 22% 为基准，并按手机/长名安全区域一次性拟合；中文字距 0.08em、Latin 0.10em、无空格跨脚本边界 0.09em。主色 `#F2DEAE`，亮底深古铜 `#644A2B`；复用缓存亮度采样与 0.27/0.19 滞回，不新增地图请求或产品 GPU 读回。SDF 128、字形网格细分 24；保留世界尺寸、曲面、深度测试、飞行显现、到达停留和 fit 后渐隐，邻近屏幕/工具栏边缘再平滑淡出。完整当前基线为 `SEARCH_LABEL_GRAND_TITLE_PLAN.md`；Cinzel 28px、Atlas、Source Serif 4 和 DOM 投影均为历史阶段。
 5. GPU 几何、材质、纹理和异步任务由创建模块释放；重新搜索、取消、重置、后台、上下文丢失、销毁和减少动态需逐项明确行为。引入新的共享生命周期抽象前先找到重复实现及实际缺陷。
 6. 网络缓慢只影响排队、超时、重试和回退，不静默降低用户当前视图画质。缓存、来源冷却与取消逻辑优先复用现有 transport。
 7. Node 服务保管服务器凭据；VITE 配置均视为公开客户端信息。诊断不输出密钥、完整请求 URL 或用户位置。
@@ -42,4 +42,4 @@
 
 每项任务定义输入、输出、修改范围、失败路径和验证证据。数学/状态改动跑针对性单测；功能交付执行类型检查与生产构建；视觉和 shader 改动追加真实浏览器检查；服务改动追加 relay 验证。已有检查通过且代码未改变时不为形式重复完整矩阵。
 
-截至 2026-10-14，Sol 的 Cinzel 交付记录报告 160 项单测、Web 类型检查与生产构建、Edge 桌面/手机/减少动态检查，以及 WGS84 曲面 GPU 与遮挡检查通过；Android 字体资源已同步。此后 Luna 按用户要求构建并记录本次 debug APK。debug 签名和 APK 构建不能替代 Android 真机/模拟器验收、正式签名或商店审核。当前提交与 APK 发布状态见 `COORDINATION.md`、`APP_RELEASE_PLAN.md` 和 `GIT_VERSIONING_PLAN.md`。
+截至 2026-10-14，最新大标题交付报告 165 项单测、类型检查、Web 构建、Edge 44 组视觉对比、桌面/手机/减少动态生命周期、生产首搜与受控 GPU 曲面/遮挡检查通过；Android 共用前端资源已同步且哈希一致，并已离线重建 debug APK。该 APK 尚未做 Android 设备验收；构建也不能替代 Android 真机/模拟器验收、正式签名或商店审核。提交与预览版发布状态见 `APP_RELEASE_PLAN.md` 和 `COORDINATION.md`。

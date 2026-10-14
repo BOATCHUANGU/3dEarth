@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 import { installTileFixtures } from './tile-fixtures.mjs';
-const out = process.env.EARTH_ARTIFACT_DIR || 'artifacts/search-label-cinzel';
+const out = process.env.EARTH_ARTIFACT_DIR || 'artifacts/search-label-grand-title/lifecycle';
 const baseURL = process.env.EARTH_TEST_URL || 'http://127.0.0.1:4285';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'msedge', headless: true });
@@ -182,7 +182,7 @@ try {
             (layer.worldSize *
               document.querySelector('#viewport').clientHeight *
               c.projectionMatrix.elements[5]) /
-              (2 * 28 * ratio),
+              (2 * layer.getState().nominalArrivalSize * ratio),
           );
         c.lookAt(t.position);
         c.updateMatrixWorld();
@@ -225,7 +225,7 @@ try {
       };
     });
     assert.ok(mesh.glyphCount >= 10 && mesh.depthTest && !mesh.depthWrite);
-    assert.ok(mesh.detail === 4 && mesh.outlineWidth === 0 && mesh.outlineBlur === 0);
+    assert.ok(mesh.detail >= 16 && mesh.outlineWidth === 0 && mesh.outlineBlur === 0);
     assert.ok(mesh.font.endsWith('EarthCinzel-Medium.woff'));
     assert.ok(mesh.metadataColorsDisabled);
     await custom('上海 Shanghai · Atlas');
@@ -285,7 +285,8 @@ try {
       const t = window.testLabel.text,
         b = t.textRenderInfo.blockBounds;
       return {
-        widthPx: ((b[2] - b[0]) / t.fontSize) * 28 * t.scale.x,
+        widthPx:
+          ((b[2] - b[0]) / t.fontSize) * window.testLabel.getState().nominalArrivalSize * t.scale.x,
         maxWidthPx: window.testLabel.getState().maxArrivalWidth,
       };
     });

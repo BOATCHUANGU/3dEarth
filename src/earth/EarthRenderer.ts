@@ -38,6 +38,7 @@ import { EarthOutputPass } from './EarthOutputPass';
 import { CameraController } from '../camera/CameraController';
 import { geodeticToWorld, WGS84 } from '../geo/CoordinateSystem';
 import { SearchLabelLayer } from '../layers/SearchLabelLayer';
+import { searchTitleSizing } from '../layers/SearchTitleSizing';
 import { createCloudMaterial, createEarthMaterial, earthVertex } from './EarthMaterial';
 import { SunLightController } from './SunLightController';
 import { ImageryTileLayer, type TileLayerState } from '../layers/ImageryTileLayer';
@@ -393,10 +394,26 @@ export class EarthRenderer {
       ?.querySelector<HTMLElement>('.toolbar')
       ?.getBoundingClientRect();
     const centerX = view.left + view.width / 2;
+    const centerY = view.top + view.height / 2;
+    const titleEm = searchTitleSizing(this.width, this.height, this.width, name).arrivalSize;
+    this.searchLabel.setScreenExclusion(
+      toolbar
+        ? {
+            left: toolbar.left - view.left,
+            top: toolbar.top - view.top,
+            right: toolbar.right - view.left,
+            bottom: toolbar.bottom - view.top,
+          }
+        : undefined,
+    );
+    const overlapsTitle =
+      toolbar &&
+      toolbar.top < centerY + titleEm * 0.6 + 12 &&
+      toolbar.bottom > centerY - titleEm * 0.6 - 12;
     const labelWidth =
-      toolbar && toolbar.left > centerX
+      toolbar && overlapsTitle && toolbar.left > centerX
         ? Math.max(40, 2 * (toolbar.left - centerX - 12))
-        : Math.max(40, this.width - 96);
+        : Math.max(40, this.width - 24);
     this.searchLabel.show(
       name,
       latitude,
@@ -454,6 +471,20 @@ export class EarthRenderer {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
     this.composer.setSize(this.width, this.height);
+    const view = this.container.getBoundingClientRect();
+    const toolbar = this.container.parentElement
+      ?.querySelector<HTMLElement>('.toolbar')
+      ?.getBoundingClientRect();
+    this.searchLabel.setScreenExclusion(
+      toolbar
+        ? {
+            left: toolbar.left - view.left,
+            top: toolbar.top - view.top,
+            right: toolbar.right - view.left,
+            bottom: toolbar.bottom - view.top,
+          }
+        : undefined,
+    );
   }
 
   private createStars() {

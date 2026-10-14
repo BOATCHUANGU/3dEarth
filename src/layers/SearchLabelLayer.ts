@@ -1,6 +1,7 @@
 import { Matrix4, MeshBasicMaterial, PerspectiveCamera, Scene, Vector3 } from 'three';
 import { SearchSurfaceText } from './SearchSurfaceText';
 import { characterRanges } from './SearchTextLayout';
+import { searchTitleSizing } from './SearchTitleSizing';
 import { prefersReducedMotion } from '../app/NativeWindow';
 import { geodeticToWorld, surfaceNormal, WGS84 } from '../geo/CoordinateSystem';
 import { localSearchText, prepareSearchFonts, SEARCH_LATIN_FONT } from './SearchFonts';
@@ -29,6 +30,12 @@ export class SearchLabelLayer {
   private lightBackground = false;
   private coordinates?: Readonly<{ latitude: number; longitude: number }>;
   private maxArrivalWidth = 0;
+  private curveMetric = new Vector3();
+  private curveSlope = new Vector3();
+  private curveA = 1;
+  private screenPoint = new Vector3();
+  private screenExclusion?: { left: number; top: number; right: number; bottom: number };
+  private safetyOpacity = 1;
   private fontPreparation: Promise<boolean>;
   constructor(private readonly scene: Scene) {
     this.fontPreparation = prepareSearchFonts();
@@ -49,13 +56,16 @@ export class SearchLabelLayer {
     const generation = this.generation;
     this.name = localSearchText(name);
     this.coordinates = { latitude, longitude };
-    this.maxArrivalWidth = maximumLabelWidth;
+    const sizing = searchTitleSizing(viewportWidth, viewportHeight, maximumLabelWidth, this.name);
+    this.arrivalSize = sizing.arrivalSize;
+    this.fittedArrivalSize = this.arrivalSize;
+    this.maxArrivalWidth = sizing.maximumWidth;
     this.status = 'preparing';
     this.worldSize =
       (this.arrivalSize * (arrivalAltitude / WGS84.a) * 2 * Math.tan((fov * Math.PI) / 360)) /
       Math.max(1, viewportHeight);
-    const text = (this.text = new SearchSurfaceText(this.arrivalSize, maximumLabelWidth));
-    this.material = new MeshBasicMaterial({ color: 0xe7eeeb, depthTest: true, depthWrite: false });
+    const text = (this.text = new SearchSurfaceText(this.arrivalSize, this.maxArrivalWidth));
+    this.material = new MeshBasicMaterial({ color: 0xf2deae, depthTest: true, depthWrite: false });
     text.material = this.material;
     text.name = 'search-surface-name';
     text.text = this.name;
@@ -66,12 +76,12 @@ export class SearchLabelLayer {
     text.letterSpacing = 0;
     text.colorRanges = characterRanges(this.name);
     text.whiteSpace = 'nowrap';
-    text.color = this.lightBackground ? 0x283b3c : 0xe7eeeb;
+    text.color = this.lightBackground ? 0x644a2b : 0xf2deae;
     text.outlineWidth = 0;
     text.outlineBlur = 0;
     text.outlineOpacity = 0;
-    text.sdfGlyphSize = 64;
-    text.glyphGeometryDetail = 4;
+    text.sdfGlyphSize = 128;
+    text.glyphGeometryDetail = 24;
     text.fillOpacity = 0;
     text.visible = false;
     // Geographic frame with each glyph vertex subsequently projected onto WGS84.
@@ -87,6 +97,9 @@ export class SearchLabelLayer {
     const n = north.clone().multiply(inverseAxes);
     const up = this.normal.clone().multiply(inverseAxes);
     const surfaceScale = { value: 1 };
+    this.curveMetric.set(e.dot(e), e.dot(n), n.dot(n));
+    this.curveSlope.set(surface.dot(up), e.dot(up), n.dot(up));
+    this.curveA = up.dot(up);
     this.material.onBeforeCompile = (shader) => {
       shader.uniforms.surfaceMetric = { value: new Vector3(e.dot(e), e.dot(n), n.dot(n)) };
       shader.uniforms.surfaceSlope = { value: new Vector3(surface.dot(up), e.dot(up), n.dot(up)) };
@@ -145,19 +158,61 @@ transformed.z += surfaceSag / surfaceScale;
   get geographicAnchor() {
     return this.coordinates;
   }
+  setScreenExclusion(rect?: { left: number; top: number; right: number; bottom: number }) {
+    this.screenExclusion = rect;
+  }
+  private screenSafety(camera: PerspectiveCamera, width: number, height: number) {
+    const text = this.text!,
+      bounds = text.textRenderInfo?.visibleBounds;
+    if (!bounds) return 1;
+    let left = Infinity,
+      top = Infinity,
+      right = -Infinity,
+      bottom = -Infinity;
+    for (const x of [bounds[0], (bounds[0] + bounds[2]) / 2, bounds[2]])
+      for (const y of [bounds[1], (bounds[1] + bounds[3]) / 2, bounds[3]]) {
+        const sx = x * text.scale.x,
+          sy = y * text.scale.x;
+        const c =
+          this.curveMetric.x * sx * sx +
+          2 * this.curveMetric.y * sx * sy +
+          this.curveMetric.z * sy * sy;
+        const b = this.curveSlope.x + this.curveSlope.y * sx + this.curveSlope.z * sy;
+        const sag = -c / (b + Math.sqrt(Math.max(0, b * b - this.curveA * c)));
+        this.screenPoint
+          .set(sx, sy, sag)
+          .applyQuaternion(text.quaternion)
+          .add(text.position)
+          .project(camera);
+        const px = ((this.screenPoint.x + 1) * width) / 2,
+          py = ((1 - this.screenPoint.y) * height) / 2;
+        left = Math.min(left, px);
+        right = Math.max(right, px);
+        top = Math.min(top, py);
+        bottom = Math.max(bottom, py);
+      }
+    let opacity = smooth(Math.min(left, width - right, top, height - bottom) / 12);
+    const rect = this.screenExclusion;
+    if (rect) {
+      const dx = Math.max(rect.left - right, left - rect.right, 0);
+      const dy = Math.max(rect.top - bottom, top - rect.bottom, 0);
+      opacity *= smooth(Math.max(dx, dy) / 12);
+    }
+    return opacity;
+  }
   setLightBackground(light: boolean, luminance?: number) {
     // Keep the two atlas inks stable near the threshold during tile refinement.
     if (!light && luminance !== undefined) light = luminance > (this.lightBackground ? 0.19 : 0.27);
     if (this.lightBackground === light) return;
     this.lightBackground = light;
-    if (this.text) this.text.color = light ? 0x283b3c : 0xe7eeeb;
+    if (this.text) this.text.color = light ? 0x644a2b : 0xf2deae;
   }
   resume() {
     if (this.expiresAt !== undefined && Date.now() >= this.expiresAt) this.clear();
   }
   update(
     camera: PerspectiveCamera,
-    _width: number,
+    width: number,
     height: number,
     now = Date.now(),
     flightProgress = 1,
@@ -182,6 +237,7 @@ transformed.z += surfaceSag / surfaceScale;
     const zoomRatio = (this.projectedSize * text.scale.x) / Math.max(this.fittedArrivalSize, 1e-9);
     this.zoomOpacity = 1 - smooth((zoomRatio - 1.5) / 1.5);
     const opacity = this.expiresAt === undefined ? smooth((flightProgress - 2 / 3) * 3) : 1;
+    this.safetyOpacity = this.zoomOpacity > 0 ? this.screenSafety(camera, width, height) : 0;
     text.fillOpacity =
       (reduced
         ? this.expiresAt !== undefined || flightProgress >= 1
@@ -189,7 +245,9 @@ transformed.z += surfaceSag / surfaceScale;
           : 0
         : Math.max(0, Math.min(opacity, 1 + remaining / 500))) *
       smooth((this.projectedSize * text.scale.x - 0.7) / 1.3) *
-      this.zoomOpacity;
+      smooth((zoomRatio - 0.02) / 0.03) *
+      this.zoomOpacity *
+      this.safetyOpacity;
     this.projected.copy(text.position).project(camera);
     text.visible =
       facing > 0 &&
@@ -210,10 +268,12 @@ transformed.z += surfaceSag / surfaceScale;
       visible: this.text?.visible ?? false,
       opacity: this.text?.fillOpacity ?? 0,
       projectedSize: this.projectedSize,
+      nominalArrivalSize: this.arrivalSize,
       fittedProjectedSize: this.projectedSize * (this.text?.scale.x ?? 0),
       fittedArrivalSize: this.fittedArrivalSize,
       trackingFit: this.text?.trackingFit ?? 1,
       zoomOpacity: this.zoomOpacity,
+      safetyOpacity: this.safetyOpacity,
       color: this.text?.color,
       surfaceProjection: 'WGS84',
       scale: this.text?.scale.x ?? 0,
@@ -240,6 +300,7 @@ transformed.z += surfaceSag / surfaceScale;
     this.projectedSize = 0;
     this.fittedArrivalSize = this.arrivalSize;
     this.zoomOpacity = 1;
+    this.safetyOpacity = 1;
   }
   dispose() {
     this.disposed = true;

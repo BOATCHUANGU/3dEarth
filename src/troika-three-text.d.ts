@@ -6,6 +6,8 @@ declare module 'troika-three-text' {
     glyphAtlasIndices: Uint16Array;
     glyphColors?: Uint8Array | null;
     caretPositions?: Float32Array;
+    visibleBounds?: [number, number, number, number];
+    sdfGlyphSize?: number;
   }
   interface GlyphsGeometry extends BufferGeometry {
     updateGlyphs(

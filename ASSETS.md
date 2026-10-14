@@ -107,6 +107,6 @@ SHA-256：
 
 SHA-256：`10e04ad87e7caa48802bfa328fdb59fbda4ac09050fbf4a00b153ee5ed11745b`。生成器输出文件名为 `exec-290c4db5-fc9d-40c6-a9c1-a1473214a270.png`；仓库中随项目发布的原样副本是 [`public/branding/earth-logo.png`](./public/branding/earth-logo.png)。未跟踪的原始输出副本和检查截图位于被 Git 忽略的 `artifacts/branding/`，不作为仓库链接。透明通道检测和 Android 同步范围见 [Logo 实施记录](./docs/EARTH_LOGO_ROLLOUT_PLAN.md)。
 
-## 2026-10-13：搜索地表名称字体
+## 2026-10-14：搜索地表名称字体与大标题
 
-地表搜索名称按 A 方案改用本地 Source Serif 4 Medium（500、opsz 20）与 Source Han Serif SC Medium（500），均为 OFL 1.1。派生字库分别改名 Earth Latin Serif 与 Earth CJK Serif，中文回退剔除前者已覆盖的可见字符，保留真实空格以兼容 Troika 的空白字符继承；过滤其不支持的 GPOS 上下文辅助/竖排定位，未重绘轮廓或改变字形 advance。字体、完整许可、来源和重建方式见 [public/fonts/README.md](./public/fonts/README.md)。44,234 个回退字符加 919 个 Latin 字库字符，两字库仅空格重叠；未覆盖字符使用本地缺字方框，不向境外字体服务补字。最新实施与验证见 [A 方案记录](./docs/SEARCH_LABEL_ATLAS_PLAN.md)，原始三维化记录见 [三维名称计划](./docs/SEARCH_LABEL_3D_TYPE_PLAN.md)。
+地表搜索名称当前使用本地 Cinzel Medium 500 与 Source Han Serif SC Medium 500，均为 SIL OFL 1.1。字体派生、许可、来源、字符覆盖、混排回退与重建方式见 [public/fonts/README.md](./public/fonts/README.md)；未覆盖字符使用本地方框，不向境外字体服务补字。当前大标题尺寸、香槟金/深古铜配色及验证见[最新交付记录](./docs/SEARCH_LABEL_GRAND_TITLE_PLAN.md)。Source Serif 4 与 Atlas A 方案仅保留在[历史记录](./docs/SEARCH_LABEL_ATLAS_PLAN.md)，三维化演进见[三维名称计划](./docs/SEARCH_LABEL_3D_TYPE_PLAN.md)。

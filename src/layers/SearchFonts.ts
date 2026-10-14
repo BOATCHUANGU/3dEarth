@@ -37,7 +37,7 @@ export function prepareSearchFonts(): Promise<boolean> {
               characters: localSearchText(
                 '上海东京纽约巴黎悉尼北京香港台北ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,−- °□',
               ),
-              sdfGlyphSize: 64,
+              sdfGlyphSize: 128,
             },
             () => {
               clearTimeout(timer);

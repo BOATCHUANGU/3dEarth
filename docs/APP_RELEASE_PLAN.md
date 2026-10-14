@@ -1,15 +1,23 @@
 # 手机 App 发布需求
 
 更新时间：2026-10-14
-状态：Android Capacitor 工程与网络配置已接入；Cinzel 搜索曲面文字与 Android 字体资源已完成。本轮 debug APK 已构建，GitHub Release 附件尚未上传。应用标识仍为临时包名，地图公网服务未部署；APK 不作正式签名、设备验收或商店发布声明。
+状态：Android Capacitor 工程与网络配置已接入。2026-10-14 大标题版本已在本机离线构建 debug APK；尚未做 Android 设备验收。最新 APK 计划作为独立 GitHub 预览版发布，旧版 `app` release 保持不变。应用标识仍为临时包名，地图公网服务未部署；debug 包不作正式签名、设备验收或商店发布声明。
 
-## Android debug APK（2026-10-14）
+## Android debug APK（2026-10-14，28px Cinzel 历史基线）
 
 - 源码提交：`bb60f93a6679989e84803693dcbbe82ad1f32f58`；构建命令：`npm run android:apk`（Android Vite mode + Capacitor sync + Gradle `assembleDebug`）。
 - 产物：`Earth-Observatory-Android-Debug-Preview-2026-10-14.apk`，61,183,178 字节；SHA-256：`C129A5B359839D6672D286C57B18B32DB565FD7B02DD637FF159B5F896634495`。构建输出和副本均被 Git 忽略。
 - `aapt dump badging` 核对 applicationId `com.example.earthobservatory`、versionName `1.0`、versionCode `1`、minSdk `24`、compileSdk `36`；`apksigner verify` 成功，使用 Android Debug 证书（APK Signature Scheme v2）。
-- Cinzel 与 CJK 字体打包资源哈希与仓库源文件一致；本地只有 `.env.example` 和 `.env.android.example` 模板，未配置公网瓦片 API。该包支持随包全球地球与离线城市搜索；在线城市影像不可用。
-- 未在模拟器或真机安装/检验。该 debug 包仅作试装预览；临时 applicationId、debug 签名、服务端点和影像授权范围仍未达到正式 App 商店发布条件。该 APK 尚未上传到 GitHub Release。
+- 当时 Cinzel 与 CJK 字体打包资源哈希与仓库源文件一致；本地只有 `.env.example` 和 `.env.android.example` 模板，未配置公网瓦片 API。该包支持随包全球地球与离线城市搜索；在线城市影像不可用。后续大标题版本更新了前端/字体资源，未重新生成 APK。
+- 未在模拟器或真机安装/检验。该 debug 包仅作试装预览；临时 applicationId、debug 签名、服务端点和影像授权范围仍未达到正式 App 商店发布条件。它保留在历史 GitHub 预览版 [app](https://github.com/BOATCHUANGU/3dEarth/releases/tag/app)，不包含后续大标题更新。
+
+## Android debug APK（2026-10-14，大标题版本）
+
+- 构建：先运行 `npm run android:sync`，再在 Windows 设置 `ANDROID_HOME` / `ANDROID_SDK_ROOT` 并运行 `android/gradlew.bat --offline assembleDebug`。TypeScript、Android Vite 构建、Capacitor 同步及 Gradle 构建均成功；Gradle 使用本机缓存，未下载依赖。
+- 产物：`android/app/build/outputs/apk/debug/app-debug.apk`，61,313,690 字节；SHA-256：`9F6657EF98CEA9C370771F84DF273806B585EAD9997591132249C7045AB64500`。APK 被 `.gitignore` 排除，不进入源码提交。
+- 包信息：`com.example.earthobservatory`，versionName `1.0` / versionCode `1`，minSdk `24`、targetSdk/compileSdk `36`。`apksigner verify` 成功，Android Debug 证书，APK Signature Scheme v2。
+- 本机没有 `.env.android.local` 或 `.env.local`，未配置公网地图 API；全球底图和随包城市索引可用，在线城市影像不可用。未在模拟器或真机安装/检验。
+- 上传目标：新建独立预览版 `preview-app1.0-grand-title-2026-10-14`（tag `app-grand-title`），保留已有 `app` tag/release。发布后补入 GitHub Release 链接及源码提交哈希。
 
 ## 本轮 Android APK 实施（2026-10-05）
 
@@ -141,7 +149,7 @@ Sol 负责确认生产网页构建与 Android 同步、Gradle APK 构建、接�
 
 ## 当前项目状态
 
-- 项目为 TypeScript、Vite、Three.js 浏览器应用，现已增加 Capacitor Android 工程；尚无 iOS 工程、正式签名配置或商店提交记录，APK 与测试状态以 Sol 本轮记录为准。
+- 项目为 TypeScript、Vite、Three.js 浏览器应用，现已增加 Capacitor Android 工程；尚无 iOS 工程、正式签名配置或商店提交记录。当前搜索文字版本的 Web/Android 同步状态见 `SEARCH_LABEL_GRAND_TITLE_PLAN.md`；上方 APK 为旧 Cinzel 基线，不包含最新大标题实现。
 - `npm run dev` 用于电脑本地开发；`npm run serve` 用于生产预览和 Node 部署。二者都不能作为正式 App 的在线服务地址。
 - NASA 全球地球纹理已随前端资源打包。城市细节通过在线 EOX、GSI、USGS 和 OSM 瓦片加载；断网时可看全球底图，不能离线查看城市瓦片。
 - 默认生产 Node 服务同时托管前端资源并转发 `/__tiles`。正式 App 需要可公网访问的 HTTPS 服务，或另行确定 App 内资源与远程地图 API 的跨域架构。

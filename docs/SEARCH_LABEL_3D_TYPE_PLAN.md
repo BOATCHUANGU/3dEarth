@@ -1,6 +1,6 @@
 # 地表搜索文字：Troika 与古典地图字体
 
-本页保存三维化初版及其历史验证。A 方案随后改用 Medium 字体、WGS84 曲面投影、固定世界尺寸和放大渐隐；又由 2026-10-14 的 [Cinzel 搜索曲面文字](./SEARCH_LABEL_CINZEL_PLAN.md)替代当前字体与布局参数。本文的原 34 px 上限与描边不再适用，旧脚本入口已转接到现行 WebGL 检查。
+本页保存三维化初版及其历史验证。A 方案随后改用 Medium 字体、WGS84 曲面投影、固定世界尺寸和放大渐隐；Cinzel 28px 阶段又由 2026-10-14 的[地表大标题与浅香槟金](./SEARCH_LABEL_GRAND_TITLE_PLAN.md)替代。本文的原 34 px 上限与描边不再适用，旧脚本入口已转接到现行 WebGL 检查。
 
 日期：2026-10-13。状态：实现与 Web 验证完成，Android 共用前端已同步；未构建新 APK、未做 Android 端检验，未提交/推送 Git。承接未提交的 SEARCH_LABEL_FLIGHT_PLAN.md 实现，不回退其他改动。
 

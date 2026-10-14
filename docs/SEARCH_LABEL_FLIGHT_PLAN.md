@@ -2,7 +2,7 @@
 
 日期：2026-10-13。状态：实现与 Web 验证完成，Android 共用前端已同步；未做 Android 端检验。只调整搜索名称的呈现，不增加城市边界。
 
-历史说明：本计划下文的 DOM 投影方案已被 Troika WGS84 曲面文字取代；三维化初版见 [三维地表文字记录](./SEARCH_LABEL_3D_TYPE_PLAN.md)，A 方案见 [Atlas 交付记录](./SEARCH_LABEL_ATLAS_PLAN.md)，当前实现、字体与验证见 [Cinzel 交付记录](./SEARCH_LABEL_CINZEL_PLAN.md)。
+历史说明：本计划下文的 DOM 投影方案已被 Troika WGS84 曲面文字取代；三维化初版见 [三维地表文字记录](./SEARCH_LABEL_3D_TYPE_PLAN.md)，A 方案见 [Atlas 交付记录](./SEARCH_LABEL_ATLAS_PLAN.md)，28px Cinzel 阶段见 [Cinzel 交付记录](./SEARCH_LABEL_CINZEL_PLAN.md)。当前字号、颜色与验证见[大标题交付记录](./SEARCH_LABEL_GRAND_TITLE_PLAN.md)。
 
 ## 实施与验证记录
 

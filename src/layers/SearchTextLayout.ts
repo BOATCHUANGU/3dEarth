@@ -3,6 +3,7 @@ export interface TrackingInfo {
   glyphColors?: Uint8Array | null;
   caretPositions?: Float32Array;
   blockBounds: [number, number, number, number];
+  sdfGlyphSize?: number;
 }
 
 /** Character IDs travel through Troika's public colorRanges shaping metadata. */
@@ -65,20 +66,38 @@ export function trackSearchText(
       caretPositions[i * 4] += shift(i);
       caretPositions[i * 4 + 1] += shift(i);
     }
-  const visibleBounds = blockBounds.slice() as [number, number, number, number];
+  const renderBounds = blockBounds.slice() as [number, number, number, number];
+  const visibleBounds: [number, number, number, number] = [
+    Infinity,
+    Infinity,
+    -Infinity,
+    -Infinity,
+  ];
+  // Troika 0.52.5 expands each path by its default 1/16 SDF margin plus half a texel.
+  // Remove that padding for screen safety; retain complete quads for render bounds.
+  const margin = 1 / 16 + 0.5 / (info.sdfGlyphSize ?? 64);
   for (let g = 0; g < glyphBounds.length; g += 4) {
-    visibleBounds[0] = Math.min(visibleBounds[0], glyphBounds[g]);
-    visibleBounds[1] = Math.min(visibleBounds[1], glyphBounds[g + 1]);
-    visibleBounds[2] = Math.max(visibleBounds[2], glyphBounds[g + 2]);
-    visibleBounds[3] = Math.max(visibleBounds[3], glyphBounds[g + 3]);
+    const pad =
+      (Math.max(glyphBounds[g + 2] - glyphBounds[g], glyphBounds[g + 3] - glyphBounds[g + 1]) *
+        margin) /
+      (1 + 2 * margin);
+    visibleBounds[0] = Math.min(visibleBounds[0], glyphBounds[g] + pad);
+    visibleBounds[1] = Math.min(visibleBounds[1], glyphBounds[g + 1] + pad);
+    visibleBounds[2] = Math.max(visibleBounds[2], glyphBounds[g + 2] - pad);
+    visibleBounds[3] = Math.max(visibleBounds[3], glyphBounds[g + 3] - pad);
+    for (let axis = 0; axis < 2; axis++) {
+      renderBounds[axis] = Math.min(renderBounds[axis], glyphBounds[g + axis]);
+      renderBounds[axis + 2] = Math.max(renderBounds[axis + 2], glyphBounds[g + axis + 2]);
+    }
   }
+  if (!glyphBounds.length) visibleBounds.splice(0, 4, ...blockBounds);
   return {
     glyphBounds,
     blockBounds,
     caretPositions,
     visibleBounds,
     glyphColors: undefined,
-    chunkedBounds: [{ start: 0, end: glyphBounds.length / 4, rect: visibleBounds }],
+    chunkedBounds: [{ start: 0, end: glyphBounds.length / 4, rect: renderBounds }],
     trackingScale,
     fitScale: Math.min(1, limit / Math.max(naturalWidth + added, fontSize * 0.01)),
   };

@@ -1,6 +1,6 @@
 # 3D 地球项目计划
 
-> 当前进度：第二步「LOD、在线瓦片、高清与城市级放大」已完成，实现与验收记录见第 11 节。搜索地点名称已升级为 Cinzel/思源宋体 WGS84 曲面文字，完成 Web 验证和 Android 资源同步（第 21 节）；本轮 Android debug APK 与 GitHub 交付状态见第 22 节。中国网络地图加载优化见第 13 节及专项计划；界面减法三阶段见第 14–15、17 节；入场动画昼夜同步与节奏调整见第 16 节。第 1–9 节保留原始首版范围，第 10 节是首版历史记录。
+> 当前进度：第二步「LOD、在线瓦片、高清与城市级放大」已完成，实现与验收记录见第 11 节。搜索地点名称已升级为大标题与浅香槟金 WGS84 曲面文字，Web 验证通过、Android debug APK 已重建（第 23–24 节）；APK 未做设备验收，GitHub 提交与预览版发布进行中。第 21–22 节记录 28px Cinzel 基线及旧 APK。中国网络地图加载优化见第 13 节及专项计划；界面减法三阶段见第 14–15、17 节；入场动画昼夜同步与节奏调整见第 16 节。第 1–9 节保留原始首版范围，第 10 节是首版历史记录。
 
 ## 1. 项目目标
 
@@ -387,14 +387,34 @@ Web 构建与四组检查通过；Android 资源同步及 debug APK 构建成功
 
 `npm test` 的 138 项、Web 生产构建及 Edge 155 四组浏览器检查通过，涵盖桌面、手机竖屏/横屏和减少动态。受控瓦片夹具用于浏览器验收，不代表真实网络瓦片测试。Android 前端已同步，`npm run android:apk` 构建成功；debug APK 为 43,676,149 字节，SHA-256 `A653A651B4094502734288DE4DF56B1A4B0BAF3256496B8FD01D9CCEA344DC77`。本轮未运行 adb、模拟器、真机或 Android 检验脚本，构建不代表 Android 显示已验收。截图、结果 JSON、构建日志和 APK 位于被 Git 忽略的本机输出目录，不作为仓库链接。实现细节与复现入口见[搜索临时名称交付记录](./docs/SEARCH_LABEL_IMPLEMENTATION.md)，原计划见[本计划](./docs/SEARCH_LABEL_SIMPLIFICATION_PLAN.md)。
 
-## 21. 搜索地点曲面文字与 Cinzel 字体（Web 验证通过）
+## 21. 搜索地点曲面文字与 Cinzel 字体（历史基线）
 
 2026-10-14 将搜索名称从 DOM 投影升级为固定 WGS84 锚点的 Troika 单网格曲面文字。Latin 使用 Cinzel Medium 500，中文使用 Source Han Serif SC Medium 500；字距按脚本设置，长名先收紧字距再 fit 至工具栏安全宽度。文字在真实飞行末段显露，到达后停留约 3 秒、0.5 秒淡出；按 fit 后字号从 1.5 倍至 3 倍渐隐，并依据附近地图明暗切换浅/深墨色。取消/重搜/重置/后台过期/上下文与 dispose 均清理对象，不引入地图请求或逐帧 GPU 读回。
 
-Sol 报告 `npm test` 160 项通过、Web 类型检查与生产构建通过；Edge 155 桌面、手机及减少动态检查通过，另核对真实 GPU glyph 曲面、前景遮挡及字库实际加载。Android 同步成功并核对字体资产哈希一致。本次交付更新前没有 APK 或 Android 设备验收；APK 构建与分发见第 22 节。实施参数、字库许可、截图证据和验证限制见 [Cinzel 交付计划](./docs/SEARCH_LABEL_CINZEL_PLAN.md)。此前 DOM、Atlas 与 Source Serif 4 方案只作历史参考。
+Sol 报告 `npm test` 160 项通过、Web 类型检查与生产构建通过；Edge 155 桌面、手机及减少动态检查通过，另核对真实 GPU glyph 曲面、前景遮挡及字库实际加载。Android 同步成功并核对字体资产哈希一致。后续大标题任务已替换其字号与颜色规则；本节仅保存当时 28px 浅灰绿/Cinzel 状态，当前参数见第 23 节。[Cinzel 交付计划](./docs/SEARCH_LABEL_CINZEL_PLAN.md)保留当时许可、截图与验证限制。此前 DOM、Atlas 与 Source Serif 4 方案也是演进历史。
 
 ## 22. 2026-10-14 Android APK 与 GitHub 交付
 
 源码与文档已推送：`bb60f93a6679989e84803693dcbbe82ad1f32f58`。随后以该提交运行 `npm run android:apk`，TypeScript 检查、Android Vite 构建、Capacitor 资源同步和 Gradle `assembleDebug` 全部成功。APK 为 `com.example.earthobservatory` / versionName `1.0` (versionCode `1`)，61,183,178 字节，SHA-256 `C129A5B359839D6672D286C57B18B32DB565FD7B02DD637FF159B5F896634495`；`apksigner verify` 验证通过，证书为 Android Debug，Scheme v2。APK 不纳入源码 Git 历史。
 
 本机无 `.env.android.local` 或 `.env.local`，此 APK 未配置公网地图 API；全球底图及随包城市索引可用，在线城市影像不可用。未在 Android 模拟器或真机安装/检验。GitHub Release 尚未创建或上传 APK 附件；debug 签名不作为正式签名、设备验收或商店发布。正式 app identity、地图服务与发布授权仍待产品化，公开预发布链接在完成后补录。
+
+> 版本关系：第 22 节 APK 由 `bb60f93` 构建，早于本次大标题源码改动，因此不含第 23 节更新。它是上一版本的历史构建记录，不代表最新搜索文字已打包或发布。
+
+## 23. 搜索地点大标题与浅香槟金（2026-10-14）
+
+用户要求把大标题规则应用于所有搜索后的地表文字。Astra 的 A 方案与 Sol 的 28px Cinzel 阶段提供了曲面、字体和生命周期基线；本轮 Sol 完成统一字号、颜色与长名称适配。中文、英文、混排、长名称和坐标均走相同布局路径，不按“东京”等地点名称分支。完整实施记录与截图见 [SEARCH_LABEL_GRAND_TITLE_PLAN.md](./docs/SEARCH_LABEL_GRAND_TITLE_PLAN.md)。
+
+- 桌面短名称按实际可见字形校准为视口宽约 22%，不以 CSS `font-size` 或 SDF 四边形宽度代替可见轮廓测量。参考视口 1230px 下“东京”由 56.5px 增至 270.5px（21.99%，4.79 倍）；普通桌面 1440px 下为 316.5px（21.98%）。手机竖屏短名宽 204.5/393px，横屏 247/852px；各自受视口高度与安全宽度约束。
+- 字体为本地 Cinzel Medium 500 与思源宋体 SC Medium 500。主色浅香槟金 `#F2DEAE`；亮影像/街道基于缓存亮度提示切换深古铜 `#644A2B`，保留 0.27/0.19 滞回、无地图新增请求及逐帧 GPU 读回。桌面长名最多 55% 视口宽，手机与长名按工具栏安全区域 fit；先收字距再等比缩小，不拉伸字形。
+- 保留 WGS84 锚点、自然透视缩放、真实飞行末段显现、到达停留 3 秒/淡出 0.5 秒和减少动态路径。SDF 提至 128，单字网格细分 24；接近边缘/工具栏时通过缓存的轮廓投影渐隐，不改变地理位置或世界尺寸。
+- `npm test`：13 个文件、165 项通过；类型检查、Web 生产构建通过。Edge 155、DPR2 的 44 组前后场景覆盖四类视口和多种文字/底图；桌面、手机、减少动态生命周期与生产首搜检查通过。GPU 检查捕获 16,875 个顶点，椭球残差 0.000161m、单三角形弦高误差 0.00581m；遮挡样本字形差异像素由 26,586 降为 0。结果是计算/受控浏览器证据，不等于真实设备或显示精度验收。地图画面为真实瓦片小样的受控回放，不是东京连续全景；手机为 Edge native CSS 布局模拟。
+- `npm run android:sync` 已完成并核对 Web/Android 主包、两份字体哈希一致。随后已离线构建大标题版本 APK，验签通过；设备验收、GitHub 提交与 Release 附件仍待完成，详见第 24 节。
+
+## 24. 2026-10-14 大标题版本 Android APK 打包与 GitHub 发布
+
+大标题实现之后重新执行 Android 资源同步和 debug APK 构建。`npm run android:sync` 的 TypeScript 检查、Vite Android 构建和 Capacitor 同步成功；Gradle 使用 `--offline assembleDebug`，利用本机缓存完成构建，没有重新下载 Gradle/Maven 依赖。
+
+- APK：`com.example.earthobservatory`，versionName `1.0` / versionCode `1`，61,313,690 字节；SHA-256 `9F6657EF98CEA9C370771F84DF273806B585EAD9997591132249C7045AB64500`。`apksigner verify` 通过，Android Debug 证书、Scheme v2。二进制不纳入源码提交。
+- 没有 `.env.android.local` 或 `.env.local`，因此未配置公网地图 API；未在 Android 模拟器或真机安装/检验。debug 签名不是商店发布签名。
+- 计划新建 GitHub 预览版 `preview-app1.0-grand-title-2026-10-14`（tag `app-grand-title`），保留历史 `app` release。提交哈希和下载链接在上传完成后补录。

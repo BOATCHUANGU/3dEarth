@@ -159,12 +159,34 @@ it('fits a long name once and preserves the fit and deadline through resize and 
   await ready();
   layer.update(camera, 393, 800);
   const before = layer.getState();
-  expect(before.scale).toBeCloseTo((393 - 96) / (40 * 28));
+  expect(before.scale).toBeCloseTo(before.maxArrivalWidth / (40 * before.nominalArrivalSize));
   camera.position.copy(geodeticToWorld(0, 0, 150000));
   camera.updateMatrixWorld();
   layer.update(camera, 800, 600);
   expect(layer.getState().scale).toBe(before.scale);
   expect(layer.getState().expiresAt).toBe(before.expiresAt);
+});
+it('fades at controls and viewport edges without resizing or moving the geographic mesh', async () => {
+  layer.show('上海', 0, 0, false);
+  await ready();
+  layer.update(camera, 1000, 800);
+  const arrival = layer.getState();
+  expect(arrival.safetyOpacity).toBe(1);
+  layer.setScreenExclusion({ left: 400, top: 300, right: 600, bottom: 500 });
+  layer.update(camera, 1000, 800);
+  expect(layer.getState().safetyOpacity).toBe(0);
+  expect(layer.getState().visible).toBe(false);
+  layer.setScreenExclusion(undefined);
+  layer.update(camera, 1000, 800);
+  expect(layer.getState().opacity).toBe(1);
+  camera.aspect = 100 / 800;
+  camera.updateProjectionMatrix();
+  layer.update(camera, 100, 800);
+  expect(layer.getState().safetyOpacity).toBe(0);
+  expect(layer.getState().scale).toBe(arrival.scale);
+  expect(layer.getState().position).toEqual(arrival.position);
+  expect(layer.getState().quaternion).toEqual(arrival.quaternion);
+  expect(layer.getState().expiresAt).toBe(arrival.expiresAt);
 });
 it('calibrates spatial fade to the fitted arrival em without resetting the long-name lifetime', async () => {
   mocks.emWidth = 30;
@@ -172,7 +194,7 @@ it('calibrates spatial fade to the fitted arrival em without resetting the long-
   await ready();
   layer.update(camera, 393, 800);
   const arrival = layer.getState();
-  expect(arrival.fittedArrivalSize).toBeLessThan(28);
+  expect(arrival.fittedArrivalSize).toBeLessThan(arrival.nominalArrivalSize);
   expect(arrival.fittedProjectedSize).toBeCloseTo(arrival.fittedArrivalSize, 3);
   expect(arrival.opacity).toBe(1);
   camera.position.copy(geodeticToWorld(0, 0, 2 + 250000 / 2.25));
@@ -219,9 +241,9 @@ it('switches the label palette without changing shape, scale or lifetime', async
   await ready();
   const before = layer.getState();
   layer.setLightBackground(true);
-  expect(layer.getState().color).toBe(0x283b3c);
+  expect(layer.getState().color).toBe(0x644a2b);
   layer.setLightBackground(false);
-  expect(layer.getState().color).toBe(0xe7eeeb);
+  expect(layer.getState().color).toBe(0xf2deae);
   expect(layer.getState().position).toEqual(before.position);
   expect(layer.getState().scale).toBe(before.scale);
   expect(layer.getState().expiresAt).toBe(before.expiresAt);
@@ -230,13 +252,13 @@ it('uses dark ink on bright imagery and hysteresis near the palette boundary', a
   layer.show('Atlas', 0, 0, false);
   await ready();
   layer.setLightBackground(false, 0.5);
-  expect(layer.getState().color).toBe(0x283b3c);
+  expect(layer.getState().color).toBe(0x644a2b);
   layer.setLightBackground(false, 0.24);
-  expect(layer.getState().color).toBe(0x283b3c);
+  expect(layer.getState().color).toBe(0x644a2b);
   layer.setLightBackground(false, 0.1);
-  expect(layer.getState().color).toBe(0xe7eeeb);
+  expect(layer.getState().color).toBe(0xf2deae);
   layer.setLightBackground(false, 0.24);
-  expect(layer.getState().color).toBe(0xe7eeeb);
+  expect(layer.getState().color).toBe(0xf2deae);
 });
 it('hides far, back-facing and offscreen names', async () => {
   layer.show('背面', 0, 180, true);

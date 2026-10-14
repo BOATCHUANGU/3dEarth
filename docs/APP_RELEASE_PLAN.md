@@ -1,7 +1,7 @@
 # 手机 App 发布需求
 
 更新时间：2026-10-14
-状态：Android Capacitor 工程与网络配置已接入；Cinzel 搜索曲面文字与 Android 字体资源已完成。本轮 debug APK 已构建，正在准备 GitHub 测试预发布。应用标识仍为临时包名，地图公网服务未部署；APK 不作正式签名、设备验收或商店发布声明。
+状态：Android Capacitor 工程与网络配置已接入；Cinzel 搜索曲面文字与 Android 字体资源已完成。本轮 debug APK 已构建，GitHub Release 附件尚未上传。应用标识仍为临时包名，地图公网服务未部署；APK 不作正式签名、设备验收或商店发布声明。
 
 ## Android debug APK（2026-10-14）
 
@@ -9,7 +9,7 @@
 - 产物：`Earth-Observatory-Android-Debug-Preview-2026-10-14.apk`，61,183,178 字节；SHA-256：`C129A5B359839D6672D286C57B18B32DB565FD7B02DD637FF159B5F896634495`。构建输出和副本均被 Git 忽略。
 - `aapt dump badging` 核对 applicationId `com.example.earthobservatory`、versionName `1.0`、versionCode `1`、minSdk `24`、compileSdk `36`；`apksigner verify` 成功，使用 Android Debug 证书（APK Signature Scheme v2）。
 - Cinzel 与 CJK 字体打包资源哈希与仓库源文件一致；本地只有 `.env.example` 和 `.env.android.example` 模板，未配置公网瓦片 API。该包支持随包全球地球与离线城市搜索；在线城市影像不可用。
-- 未在模拟器或真机安装/检验。该 debug 包仅作试装预览；临时 applicationId、debug 签名、服务端点和影像授权范围仍未达到正式 App 商店发布条件。GitHub 预发布准备中。
+- 未在模拟器或真机安装/检验。该 debug 包仅作试装预览；临时 applicationId、debug 签名、服务端点和影像授权范围仍未达到正式 App 商店发布条件。该 APK 尚未上传到 GitHub Release。
 
 ## 本轮 Android APK 实施（2026-10-05）
 

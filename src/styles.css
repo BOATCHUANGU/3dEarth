@@ -364,13 +364,6 @@ button[aria-expanded='true'] {
   display: block;
   outline: none;
 }
-.map-labels {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 2;
-}
 .eyebrow {
   font-size: 9px;
   font-weight: 500;
@@ -537,24 +530,6 @@ button[aria-expanded='true'] {
   font-family: Consolas, monospace;
   font-size: 8px;
   letter-spacing: 0.4px;
-}
-.search-place-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #e5ecf1;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.06em;
-  text-shadow:
-    0 1px 5px #080d14,
-    0 1px 12px #080d14;
 }
 .floating-panel {
   position: absolute;

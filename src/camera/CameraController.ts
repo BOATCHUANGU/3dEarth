@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { geodeticToWorld, surfaceNormal, worldToGeodetic, WGS84 } from '../geo/CoordinateSystem';
 
 interface CameraFlight {
+  kind: 'travel' | 'zoom';
   startDirection: Vector3;
   destination: Vector3;
   rotation: Quaternion;
@@ -36,7 +37,7 @@ function interpolateAltitude(start: number, end: number, progress: number): numb
 export class CameraController {
   /** Fired by orbiting, zooming, and each animation step that changes the view. */
   onChange?: () => void;
-  onFlightState?: (state: 'started' | 'arrived' | 'cancelled') => void;
+  onFlightState?: (state: 'started' | 'arrived' | 'cancelled', kind: 'travel' | 'zoom') => void;
 
   private readonly controls: OrbitControls;
   private readonly initialPosition: Vector3;
@@ -101,6 +102,14 @@ export class CameraController {
   /** Lets tile scheduling distinguish camera travel from a settled close view. */
   get isFlying(): boolean {
     return this.flight !== null;
+  }
+
+  get flightProgress(): number {
+    return this.flight ? Math.min(1, this.flight.elapsed / this.flight.duration) : 1;
+  }
+
+  get destinationAltitude(): number {
+    return this.flight?.endAltitude ?? this.altitudeMeters;
   }
 
   /** WGS84 height of the camera, independently of world-unit orbit distance. */
@@ -175,7 +184,7 @@ export class CameraController {
     if (progress === 1) {
       this.flight = null;
       this.refreshView();
-      this.onFlightState?.('arrived');
+      this.onFlightState?.('arrived', flight.kind);
     }
   }
 
@@ -234,7 +243,8 @@ export class CameraController {
 
   private startFlight(destination: Vector3, duration: number, allowLift = true): void {
     this.cancelFlight();
-    this.onFlightState?.('started');
+    const kind = allowLift ? 'travel' : 'zoom';
+    this.onFlightState?.('started', kind);
     // Consume residual orbit momentum once so it cannot pull against the flight.
     this.controls.autoRotate = false;
     this.controls.enableDamping = false;
@@ -255,7 +265,7 @@ export class CameraController {
       this.controls.update(0);
       this.refreshView();
       this.notifyChange();
-      this.onFlightState?.('arrived');
+      this.onFlightState?.('arrived', kind);
       return;
     }
 
@@ -263,6 +273,7 @@ export class CameraController {
     const endDirection = surfaceNormal(end.latitude, end.longitude);
     const angle = startDirection.angleTo(endDirection);
     this.flight = {
+      kind,
       startDirection,
       destination,
       rotation: new Quaternion().setFromUnitVectors(startDirection, endDirection),
@@ -323,8 +334,9 @@ export class CameraController {
 
   private cancelFlight(): void {
     if (!this.flight) return;
+    const kind = this.flight.kind;
     this.flight = null;
-    this.onFlightState?.('cancelled');
+    this.onFlightState?.('cancelled', kind);
   }
 
   private readonly handleInteraction = (): void => {

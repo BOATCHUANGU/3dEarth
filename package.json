@@ -25,7 +25,8 @@
     "@capacitor/core": "8.5.2",
     "gsap": "3.15.0",
     "lucide": "^0.577.0",
-    "three": "^0.183.0"
+    "three": "^0.183.0",
+    "troika-three-text": "0.52.5"
   },
   "devDependencies": {
     "@capacitor/cli": "8.5.2",

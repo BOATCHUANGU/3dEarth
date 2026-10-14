@@ -94,9 +94,11 @@ Vite 的 `VITE_` 变量会公开进入客户端。`VITE_ARCGIS_API_KEY` 和纯�
 
 ## 搜索地点名称
 
-城市与坐标搜索都经 `EarthRenderer.focusLocation` 开始相机飞行并设置名称；`CameraController.onFlightState` 在飞行开始、到达或取消时通知渲染层。`SearchLabelLayer` 最多维护一条文本标签，使用 `textContent` 写入并逐帧按 WGS84 地理位置投影。目标在地球背面、视口外或与主要控件重叠时隐藏，不贴边，也不接收点击或拖动。
+城市与坐标搜索都经 `EarthRenderer.focusLocation` 开始相机飞行并设置名称；`CameraController.onFlightState` 携带 travel/zoom 类型报告飞行开始、到达或取消。当前 `SearchLabelLayer` 在 Three.js 场景中维护一条 Troika SDF 网格；`SearchSurfaceText` 只在字体 shaping 完成时进行一次布局，按中文字形和 Latin 字母分别加字距、拟合安全宽度，并将字形顶点映射到 WGS84 椭球曲面。名称固定于搜索坐标的东/北方向，不随镜头反向缩放。渲染更新负责真实飞行显露、投影尺寸渐隐、地表明暗选墨和地球遮挡，不逐帧排版、不读回 GPU 像素、不接收点击或拖动。
 
-名称的 3 秒保留期从相机实际到达时开始；后续飞行、重置、交互取消、上下文丢失和销毁会清除旧标签。页面隐藏时先隐藏，恢复渲染时按绝对时间丢弃过期名称；减少动态偏好下无淡入淡出。地点数据仍供搜索使用，不再通过 `MarkerLayer` 创建常驻地图按钮，也没有 `markers` 图层开关。
+本地字体为 Cinzel Medium 500 与 Source Han Serif SC Medium 500；加载失败时不请求 CDN，并保留安全失败状态。中文字距 0.08em、Latin 字母 0.10em、混排边界 0.09em；真实空格、标点和数字不额外加宽。名称先收紧字距，再一次性缩小以适应工具栏安全宽度。到达后保留 3 秒并淡出 0.5 秒；后续地点飞行、交互取消、重置、页面后台过期、上下文中断和销毁会清理旧对象。减少动态偏好下省略动效。地点数据仍供搜索使用，不再通过 `MarkerLayer` 创建常驻地图按钮，也没有 `markers` 图层开关。
+
+旧版 DOM 投影方案记录在 `SEARCH_LABEL_FLIGHT_PLAN.md`，Atlas 字体方案记录在 `SEARCH_LABEL_ATLAS_PLAN.md`；二者是演进历史。当前字号、字体和渐隐参数以 [Cinzel 交付记录](./docs/SEARCH_LABEL_CINZEL_PLAN.md)为准。
 
 ## 验证入口
 

@@ -20,6 +20,7 @@ import {
   parentTile,
   iterateMercatorTiles,
   targetZoom,
+  tileUV,
   type MercatorTile,
 } from './MercatorTiles';
 import { createTileGeometry } from './TileGeometry';
@@ -80,6 +81,7 @@ interface Entry {
   labelsRetryAt?: number;
   labelsTexture?: Texture;
   labelsImage?: ImageBitmap;
+  palettePixels?: Uint8ClampedArray;
 }
 
 /** Continuous, view-driven WGS84 imagery. It never coarsens LOD in response to FPS/device size. */
@@ -109,6 +111,7 @@ export class ImageryTileLayer {
   private preferredId = '';
   private fallbackSource?: TileSource;
   private unsubscribeNetwork: () => void;
+  private paletteContext?: CanvasRenderingContext2D | null;
 
   constructor(
     private worldSun: Vector3,
@@ -157,6 +160,72 @@ export class ImageryTileLayer {
       if (entry.labelsState === 'error') entry.labelsRetryAt = entry.retryAt ?? 0;
     }
     this.selectionClock = 1;
+  }
+
+  /** Palette hint only; does not change tile selection, lighting, or rendering. */
+  get hasLightMapBackground(): boolean {
+    return (
+      this.enabled &&
+      this.source?.kind === 'map' &&
+      this.opacity.value > 0.6 &&
+      this.leaves.some((key) => this.entries.get(key)?.state === 'ready')
+    );
+  }
+
+  /** Label-only hint from already drawn imagery; no requests or GPU readback. */
+  searchLabelLuminance(latitude: number, longitude: number): number | undefined {
+    let cover: Entry | undefined;
+    let uv: ReturnType<typeof tileUV> | undefined;
+    for (const entry of this.entries.values()) {
+      if (
+        !entry.mesh?.visible ||
+        !entry.image ||
+        entry.source.kind === 'map' ||
+        entry.mesh.material.uniforms.fade.value * this.opacity.value < 0.6
+      )
+        continue;
+      const point = tileUV(longitude, latitude, entry.tile);
+      if (
+        point.u < 0 ||
+        point.u > 1 ||
+        point.v < 0 ||
+        point.v > 1 ||
+        (cover && entry.tile.z <= cover.tile.z)
+      )
+        continue;
+      cover = entry;
+      uv = point;
+    }
+    if (!cover || !uv) return;
+    try {
+      if (!cover.palettePixels) {
+        if (this.paletteContext === undefined) {
+          const canvas = document.createElement('canvas');
+          canvas.width = canvas.height = 8;
+          this.paletteContext = canvas.getContext('2d', { willReadFrequently: true });
+        }
+        if (!this.paletteContext) return;
+        this.paletteContext.drawImage(cover.image!, 0, 0, 8, 8);
+        cover.palettePixels = this.paletteContext.getImageData(0, 0, 8, 8).data;
+      }
+      // ImageBitmap was decoded with flipY; Mercator UV uses north-to-south rows.
+      const x = Math.max(1, Math.min(6, Math.floor(uv.u * 8)));
+      const y = Math.max(1, Math.min(6, Math.floor((1 - uv.v) * 8)));
+      const linear = (v: number) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+      let luminance = 0;
+      for (let row = y - 1; row <= y + 1; row++)
+        for (let col = x - 1; col <= x + 1; col++) {
+          const i = (row * 8 + col) * 4,
+            p = cover.palettePixels;
+          luminance +=
+            0.2126 * linear(p[i] / 255) +
+            0.7152 * linear(p[i + 1] / 255) +
+            0.0722 * linear(p[i + 2] / 255);
+        }
+      return luminance / 9;
+    } catch {
+      return undefined;
+    }
   }
 
   getState(): TileLayerState {
@@ -696,6 +765,7 @@ export class ImageryTileLayer {
     entry.mesh = undefined;
     entry.texture = undefined;
     entry.image = undefined;
+    entry.palettePixels = undefined;
   }
   dispose() {
     this.disposed = true;

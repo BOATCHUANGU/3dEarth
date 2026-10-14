@@ -107,6 +107,7 @@ export class EarthRenderer {
       cancelAnimationFrame(this.frame);
       this.clock.stop();
     } else if (this.running) {
+      this.searchLabel.resume();
       this.entrance?.resume();
       this.clock.start();
       this.animate();
@@ -131,7 +132,6 @@ export class EarthRenderer {
 
   constructor(
     private container: HTMLElement,
-    labelContainer: HTMLElement,
     private options: RendererOptions,
   ) {
     this.renderer = new WebGLRenderer({
@@ -151,10 +151,11 @@ export class EarthRenderer {
     container.prepend(this.renderer.domElement);
     this.controls = new CameraController(this.camera, this.renderer.domElement);
     this.controls.setSuspended(true);
-    this.searchLabel = new SearchLabelLayer(labelContainer);
-    this.controls.onFlightState = (state) => {
-      if (state === 'arrived') this.searchLabel.arrive();
-      else this.searchLabel.clear();
+    this.searchLabel = new SearchLabelLayer(this.scene);
+    this.controls.onFlightState = (state, kind) => {
+      if (state === 'arrived' && kind === 'travel') this.searchLabel.arrive();
+      else if (kind === 'travel' && (state === 'cancelled' || state === 'started'))
+        this.searchLabel.clear();
     };
     this.globe.visible = false;
     this.scene.add(this.globe);
@@ -386,7 +387,31 @@ export class EarthRenderer {
     duration = 1.8,
   ) {
     this.controls.focusOn(latitude, longitude, altitude, duration);
-    this.searchLabel.show(name, latitude, longitude, this.controls.isFlying);
+    // Measure available center span once; the geographic label must not sit behind controls.
+    const view = this.container.getBoundingClientRect();
+    const toolbar = this.container.parentElement
+      ?.querySelector<HTMLElement>('.toolbar')
+      ?.getBoundingClientRect();
+    const centerX = view.left + view.width / 2;
+    const labelWidth =
+      toolbar && toolbar.left > centerX
+        ? Math.max(40, 2 * (toolbar.left - centerX - 12))
+        : Math.max(40, this.width - 96);
+    this.searchLabel.show(
+      name,
+      latitude,
+      longitude,
+      this.controls.isFlying,
+      this.controls.destinationAltitude,
+      this.height,
+      this.camera.fov,
+      this.width,
+      labelWidth,
+    );
+  }
+
+  get searchLabelState() {
+    return this.searchLabel.getState();
   }
 
   setMapMode(mode: MapMode) {
@@ -515,8 +540,23 @@ export class EarthRenderer {
     if (this.clouds && this.entranceFinished && !prefersReducedMotion())
       this.clouds.rotation.y += delta * 0.0006;
     this.syncSunDirection();
+    this.camera.updateMatrixWorld();
+    const labelAnchor = this.searchLabel.geographicAnchor;
+    this.searchLabel.setLightBackground(
+      this.tiles?.hasLightMapBackground ?? false,
+      labelAnchor
+        ? this.tiles?.searchLabelLuminance(labelAnchor.latitude, labelAnchor.longitude)
+        : undefined,
+    );
+    if (this.entranceFinished)
+      this.searchLabel.update(
+        this.camera,
+        this.width,
+        this.height,
+        Date.now(),
+        this.controls.flightProgress,
+      );
     this.composer.render(delta);
-    if (this.entranceFinished) this.searchLabel.update(this.camera, this.width, this.height);
     this.elapsed += rawDelta;
     this.frameCount++;
     if (this.elapsed >= 0.5) {

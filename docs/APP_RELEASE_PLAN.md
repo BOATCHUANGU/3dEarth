@@ -1,7 +1,7 @@
 # 手机 App 发布需求
 
-更新时间：2026-10-05  
-状态：Android Capacitor 工程与网络配置已接入；Astra 完成实现，构建、测试与 APK 结果由 Sol 单独记录。尚未正式签名或发布。
+更新时间：2026-10-14
+状态：Android Capacitor 工程与网络配置已接入；Sol 已完成 Cinzel 搜索曲面文字与 Android 字体资源同步。Luna 正在构建可供测试分发的 debug APK。应用标识仍为临时包名，地图公网服务未部署；APK 不作正式签名、设备验收或商店发布声明。
 
 ## 本轮 Android APK 实施（2026-10-05）
 

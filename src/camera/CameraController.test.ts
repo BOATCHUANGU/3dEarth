@@ -43,6 +43,23 @@ afterEach(() => {
 });
 
 describe('city altitude camera', () => {
+  it('exposes true progress for short flights and distinguishes zoom from destination travel', () => {
+    const { controller } = setup();
+    const events: string[] = [];
+    controller.onFlightState = (state, kind) => events.push(`${state}:${kind}`);
+    controller.focusOn(22, 115, 250_000, 0.3);
+    controller.update(0.1);
+    expect(controller.flightProgress).toBeCloseTo(1 / 3);
+    expect(controller.destinationAltitude).toBeCloseTo(250_000, 3);
+    advance(controller, 0.3);
+    expect(controller.flightProgress).toBe(1);
+    controller.zoom(0.5);
+    expect(events.at(-1)).toBe('started:zoom');
+    controller.zoom(0.8);
+    expect(events.slice(-2)).toEqual(['cancelled:zoom', 'started:zoom']);
+    advance(controller, 0.5);
+    expect(events.at(-1)).toBe('arrived:zoom');
+  });
   it('reports arrival only after travel and cancellation on replacement or interruption', () => {
     const { controller, surface } = setup();
     const events: string[] = [];

@@ -1,8 +1,8 @@
 # Git 版本管理建立计划
 
-更新时间：2026-10-10
+更新时间：2026-10-14
 
-状态：本地仓库已在 `main` 初始化；远程仓库尚未配置。
+状态：`main` 已配置 `origin` 并跟踪公开仓库 `BOATCHUANGU/3dEarth`；截至本次工作起始，远端与 `05db2bd` 基线一致。本轮搜索曲面文字改动和文档尚未提交。
 
 ## 目标
 
@@ -15,7 +15,7 @@
 - 项目声明使用 Vite `^7.3.1`；`package-lock.json` 锁定依赖解析结果。
 - 网页与 App 共用同一套 Vite、TypeScript、Three.js 源码。`build:android` 使用 `vite build --mode android`，`android:sync` 将该模式生成的 `dist/` 同步进 Capacitor Android 工程。
 - 网页和 App 使用同一前端代码，但 API 地址在构建时注入；网站可以使用同源服务，APK 必须配置正式 HTTPS API。Vite 支持按 mode 加载 `.env.[mode]` 配置，`VITE_` 变量会进入客户端包，不能存放秘密。
-- 当前工作目录已初始化本地 `.git`，主分支为 `main`；本机已安装 Git，尚无远程仓库。
+- 当前工作目录已初始化本地 `.git`，主分支为 `main`，远程为 `https://github.com/BOATCHUANGU/3dEarth.git`。APK 构建输出与同步生成文件继续由 `.gitignore` 排除。
 - `.gitignore` 忽略 `node_modules/`、`dist/`、所有非示例环境文件、签名文件、Android SDK 本机路径、Gradle 缓存/构建输出及 APK/AAB。项目文档引用的中国网络验证报告和三张阶段截图保留在版本管理中，其余生成型 artifacts 忽略。
 
 ## 建仓前整理

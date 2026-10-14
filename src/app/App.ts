@@ -89,7 +89,7 @@ export class App {
       </header>
 
       <main class="experience">
-        <div class="viewport" id="viewport"><div class="map-labels" id="map-labels"></div></div>
+        <div class="viewport" id="viewport"></div>
         <div class="compass" aria-hidden="true"><span>N</span><div class="compass-needle"></div><small>S</small></div>
         <div class="detail-status" id="detail-status" role="status" aria-live="polite" hidden><span id="tile-status"></span><button id="retry-tiles" hidden>重试</button></div>
         <div class="tile-attribution" id="tile-attribution" hidden></div>
@@ -177,7 +177,7 @@ export class App {
     await nativeLaunchFinished;
     if (this.disposed) return;
     try {
-      this.earth = new EarthRenderer(this.$('#viewport'), this.$('#map-labels'), {
+      this.earth = new EarthRenderer(this.$('#viewport'), {
         onProgress: (progress) => {
           this.$('#loading-progress').style.width = `${progress * 100}%`;
         },
@@ -213,6 +213,8 @@ export class App {
           tiles: earth.tileState,
           pixelRatio: earth.renderer.getPixelRatio(),
           isFlying: earth.controls.isFlying,
+          flightProgress: earth.controls.flightProgress,
+          searchLabel: earth.searchLabelState,
           network: networkProfile.getState(),
         }),
       };
@@ -702,6 +704,8 @@ declare global {
         tiles?: TileLayerState;
         pixelRatio: number;
         isFlying: boolean;
+        flightProgress: number;
+        searchLabel: EarthRenderer['searchLabelState'];
         network: NetworkState;
       };
     };

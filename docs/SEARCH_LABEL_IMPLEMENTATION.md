@@ -1,5 +1,7 @@
 # 搜索临时名称交付记录
 
+> 历史快照（2026-10-12）。此处 DOM 投影文字实现已被 [2026-10-14 Cinzel WGS84 曲面文字](./SEARCH_LABEL_CINZEL_PLAN.md)替代；本页的 `textContent`、字号和渐隐参数不描述当前版本。
+
 2026-10-12：实现、Web 检查、Android 同步/构建和维护文档整理已完成，并一并提交至本地 `main`；未配置远程或推送 Git。产品操作说明见 [README](../README.md)，项目进度见 [PROJECT_PLAN 第 20 节](../PROJECT_PLAN.md)，扩展说明见 [EXTENDING](../EXTENDING.md)，原始设计及完成记录见[主计划](./SEARCH_LABEL_SIMPLIFICATION_PLAN.md)。
 
 ## 实现

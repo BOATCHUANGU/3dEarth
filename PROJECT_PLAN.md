@@ -395,4 +395,6 @@ Sol 报告 `npm test` 160 项通过、Web 类型检查与生产构建通过；Ed
 
 ## 22. 2026-10-14 Android APK 与 GitHub 交付
 
-本节在本次 APK 构建和 GitHub 交付完成后补入实际源码提交、APK 文件大小、SHA-256、签名类型和预发布链接。预期构建命令为 `npm run android:apk`，APK 不纳入源码 Git 历史；debug 签名只供测试安装，不作为正式签名或 Android 设备验收。
+源码与文档已推送：`bb60f93a6679989e84803693dcbbe82ad1f32f58`。随后以该提交运行 `npm run android:apk`，TypeScript 检查、Android Vite 构建、Capacitor 资源同步和 Gradle `assembleDebug` 全部成功。APK 为 `com.example.earthobservatory` / versionName `1.0` (versionCode `1`)，61,183,178 字节，SHA-256 `C129A5B359839D6672D286C57B18B32DB565FD7B02DD637FF159B5F896634495`；`apksigner verify` 验证通过，证书为 Android Debug，Scheme v2。APK 不纳入源码 Git 历史。
+
+本机无 `.env.android.local` 或 `.env.local`，此 APK 未配置公网地图 API；全球底图及随包城市索引可用，在线城市影像不可用。未在 Android 模拟器或真机安装/检验。本次仅按测试预览制作 GitHub pre-release，debug 签名不作为正式签名、设备验收或商店发布；正式 app identity、地图服务与发布授权仍待产品化。预发布链接在实际发布后补录。

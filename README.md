@@ -4,7 +4,7 @@
 
 第二步已完成：接入真实在线瓦片、物理像素 LOD、最高 12K 全球底图与最低 150 m 城市缩放；始终按清晰度优先渲染。
 
-2026-10-14 搜索选中的城市名或坐标已改为 WGS84 锚定的地表曲面文字，使用本地 Cinzel Medium 与思源宋体 SC Medium，并按实际飞行到达尺寸适配缩放渐隐。160 项单元测试、Web 构建及桌面、手机和减少动态检查通过；Android 资源已同步。当前 Luna 收尾正在构建可供试装的 debug APK；没有 Android 设备验收。参数、实现和验证边界见[最新交付记录](./docs/SEARCH_LABEL_CINZEL_PLAN.md)，较早 DOM 标注记录见[历史计划](./docs/SEARCH_LABEL_IMPLEMENTATION.md)。
+2026-10-14 搜索选中的城市名或坐标已改为 WGS84 锚定的地表曲面文字，使用本地 Cinzel Medium 与思源宋体 SC Medium，并按实际飞行到达尺寸适配缩放渐隐。160 项单元测试、Web 构建及桌面、手机和减少动态检查通过；Android 资源同步与 debug APK 构建成功，APK 正在准备 GitHub 测试预发布，未做 Android 设备验收。参数、实现和验证边界见[最新交付记录](./docs/SEARCH_LABEL_CINZEL_PLAN.md)，较早 DOM 标注记录见[历史计划](./docs/SEARCH_LABEL_IMPLEMENTATION.md)。
 
 2026-10-04 已实施三阶段界面减法：地图样式移入图层设置，移除尺度快捷栏、操作提示、正常加载状态、左侧宣传/地点详情、地球顶部文案和首页目的地栏；自转控制改为无文字图标按钮，精选城市移入搜索建议。地球视口和启动遮罩覆盖主区域，右侧按视角与显示分组控制。全球城市检索及 UI 待验证项见 [第三阶段计划](./docs/UI_SIMPLIFICATION_PLAN_3.md) 和 [Sol 验收清单](./docs/UI_SIMPLIFICATION_3_SOL_TESTS.md)。本轮未运行构建、测试或浏览器验收。
 
@@ -87,7 +87,7 @@ npm run android:apk
 
 首次输入城市名时才启动 Worker 并从本应用读取索引；gzip 为 **3,473,691 字节（3.31 MiB）**，不支持解压或压缩资源不可用时回退到 **7,952,531 字节（7.58 MiB）** JSON，不进入主 JS 包。运行时不请求境外地名 API、地图瓦片或高德服务。已有本地服务/资源可用时，断开外网仍能检索；本功能不新增 Service Worker，不能保证未缓存的远程站点首次离线打开。索引失败时保留五城建议与坐标输入，并提供重试。
 
-数据规则、来源和署名见 [ASSETS.md](./ASSETS.md)，生成记录见 [public/search/metadata.json](./public/search/metadata.json)。本阶段未运行构建或测试，后续任务见 [UI 第三阶段验证清单](./docs/UI_SIMPLIFICATION_3_SOL_TESTS.md)。
+数据规则、来源和署名见 [ASSETS.md](./ASSETS.md)，生成记录见 [public/search/metadata.json](./public/search/metadata.json)。此处“未运行构建或测试”指 2026-10-04 城市搜索/UI 改版记录；之后搜索曲面文字的验证范围见[当前 Cinzel 交付记录](./docs/SEARCH_LABEL_CINZEL_PLAN.md)。
 
 ## 城市细节与数据源
 

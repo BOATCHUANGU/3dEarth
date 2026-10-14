@@ -22,7 +22,7 @@
 
 1. 初始化与架构核对：已读取既有规划、Astra 与 Sol 最新交付、Luna 发布记录；保留已有工程、不重新生成脚手架。统筹的只读审查确认搜索文字改动归属和架构契约，无实质阻塞。
 2. Sol：Cinzel 搜索曲面文字已实现；160 项单测、Web 构建、Edge 桌面/手机/减少动态、WGS84 曲面/遮挡检查完成，Android 资源同步并核对字体哈希。APK、Android 设备验收和 Git 提交未包含在 Sol 的原始任务中。
-3. Luna：已读取 Sol 与架构对话，更新 README、EXTENDING、PROJECT_PLAN、ARCHITECTURE、APP_RELEASE_PLAN 和 Git 记录；保留历史计划并注明当前基线。Luna 负责审核并推送源码、构建本次 debug APK，记录产物哈希、源码提交及试装边界，再按用户要求准备 GitHub 预发布。
+3. Luna：已读取 Sol 与架构对话，更新 README、EXTENDING、PROJECT_PLAN、ARCHITECTURE、APP_RELEASE_PLAN 和 Git 记录；保留历史计划并注明当前基线。源码已以 `bb60f93` 推送。Debug APK 已构建并核验哈希、签名和包元数据，记录在 App 发布计划；正在准备 GitHub 测试预发布，未做 Android 设备验收。
 
 ## 已确认的新任务：Cinzel 与文字显示增强
 
